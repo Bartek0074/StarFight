@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useCanvas } from './CanvasContext';
 
+import { initAliens } from '../functions/initAliens.js';
+
 import { updatePlayer } from '../functions/updatePlayer.js';
 import { updateAliens } from '../functions/updateAliens';
 import { updateMissiles } from '../functions/updateMissiles.js';
 import { shoot } from '../functions/shoot.js';
 
 import Player from '../classes/Player';
-import Alien from '../classes/Alien';
 import Missile from '../classes/Missile';
 
 export function Canvas() {
@@ -27,13 +28,15 @@ export function Canvas() {
 
 	const player = new Player();
 
-	const froggy = new Alien(200, 50);
-
 	const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
 	const missilesRef = useRef([]);
 
 	let aliensRef = useRef([]);
+
+	const initAll = () => {
+		initAliens(aliensRef);
+	};
 
 	const updateAll = () => {
 		const canvas = canvasRef.current;
@@ -46,18 +49,6 @@ export function Canvas() {
 		updatePlayer(ctx, keysRef.current, player);
 
 		updateMissiles(ctx, missilesRef);
-	};
-
-	const initAliens = () => {
-		let newAliens = [];
-
-		for (let i = 0; i < 11; i++) {
-			newAliens.push(new Alien(30 + i * 60, 30));
-		}
-		for (let i = 0; i < 11; i++) {
-			newAliens.push(new Alien(30 + i * 60, 90));
-		}
-		aliensRef.current = newAliens;
 	};
 
 	useEffect(() => {
@@ -111,7 +102,7 @@ export function Canvas() {
 
 		prepareCanvas();
 
-		initAliens();
+		initAll();
 
 		const animate = () => {
 			clearCanvas();
