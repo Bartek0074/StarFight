@@ -1,19 +1,19 @@
 import {
 	CANVAS_WIDTH,
 	CANVAS_HEIGHT,
-	SPACESHIP_WIDTH,
-	SPACESHIP_HEIGHT,
+	ALIEN_WIDTH,
+	ALIEN_HEIGHT,
 } from '../data/variables';
 
-export default class Player {
-	constructor() {
+export default class Alien {
+	constructor(x, y) {
 		this.position = {
-			x: CANVAS_WIDTH / 2 - SPACESHIP_WIDTH / 2,
-			y: CANVAS_HEIGHT - SPACESHIP_HEIGHT - 10,
+			x: x,
+			y: y,
 		};
 
-		this.width = SPACESHIP_WIDTH;
-		this.height = SPACESHIP_HEIGHT;
+		this.width = ALIEN_WIDTH;
+		this.height = ALIEN_HEIGHT;
 
 		this.velocity = { x: 0, y: 0 };
 
