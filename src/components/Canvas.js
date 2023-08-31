@@ -8,8 +8,9 @@ import { updateAliens } from '../functions/updateAliens';
 import { updateMissiles } from '../functions/updateMissiles.js';
 import { shoot } from '../functions/shoot.js';
 
+import { areRectanglesColliding } from '../functions/areRectanglesColliding.js';
+
 import Player from '../classes/Player';
-import Missile from '../classes/Missile';
 
 export function Canvas() {
 	// to redux
@@ -108,6 +109,34 @@ export function Canvas() {
 			clearCanvas();
 
 			updateAll();
+
+			missilesRef.current.forEach((missile, missileIndex) => {
+				aliensRef.current.forEach((alien, alienIndex) => {
+					const rect1 = {
+						x: missile.position.x,
+						y: missile.position.y,
+						width: missile.width,
+						height: missile.height,
+					};
+					const rect2 = {
+						x: alien.position.x,
+						y: alien.position.y,
+						width: alien.width,
+						height: alien.height,
+					};
+
+					if (
+						areRectanglesColliding(rect1, rect2) &&
+						missile.from === 'player'
+					) {
+						aliensRef.current.splice(alienIndex, 1);
+						missilesRef.current.splice(missileIndex, 1);
+						// bum
+					} else {
+						// not bum
+					}
+				});
+			});
 
 			animationFrameId = requestAnimationFrame(animate);
 		};

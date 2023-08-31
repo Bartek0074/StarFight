@@ -25,7 +25,7 @@ export const shoot = (playerPosition, missilesRef, type = 'single_shot') => {
 
 	const missileWidth = 4;
 	const missileHeight = 6;
-	const missileVelocityY = 5;
+	const missileVelocityY = -5;
 	const missileVelocityX = 0;
 
 	newMissiles.push(

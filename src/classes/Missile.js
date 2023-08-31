@@ -1,6 +1,6 @@
 export default class Missile {
-	constructor(type, x, y, width, height, dx, dy) {
-		this.type = type;
+	constructor(from, x, y, width, height, dx, dy) {
+		this.from = from;
 
 		this.position = {
 			x: x,
@@ -12,14 +12,7 @@ export default class Missile {
 		this.width = width;
 		this.height = height;
 
-		if (type === 'player') {
-			this.velocity = { x: this.velocity.x, y: -this.velocity.y };
-		} else if (type === 'alien') {
-			this.velocity = { x: this.velocity.x, y: this.velocity.y };
-		}
-
 		this.draw = function (ctx) {
-			
 			ctx.beginPath();
 			ctx.rect(this.position.x, this.position.y, this.width, this.height);
 			ctx.fillStyle = '#F45050';

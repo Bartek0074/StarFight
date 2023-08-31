@@ -6,7 +6,7 @@ import {
 } from '../data/variables';
 
 export default class Alien {
-	constructor(x, y) {
+	constructor(x, y, color) {
 		this.position = {
 			x: x,
 			y: y,
