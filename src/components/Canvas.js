@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useCanvas } from './CanvasContext';
 
-import { initAliens } from '../functions/initAliens.js';
+import { initAliens } from '../functions/inits/initAliens.js';
 
-import { updatePlayer } from '../functions/updatePlayer.js';
-import { updateAliens } from '../functions/updateAliens';
-import { updateMissiles } from '../functions/updateMissiles.js';
-import { shoot } from '../functions/shoot.js';
+import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
 
-import { areRectanglesColliding } from '../functions/areRectanglesColliding.js';
+import { updatePlayer } from '../functions/updates/updatePlayer.js';
+import { updateAliens } from '../functions/updates/updateAliens';
+import { updateMissiles } from '../functions/updates/updateMissiles.js';
+
+import { shoot } from '../functions/actions/shoot.js';
 
 import Player from '../classes/Player';
 
@@ -37,6 +38,10 @@ export function Canvas() {
 
 	const initAll = () => {
 		initAliens(aliensRef);
+	};
+
+	const checkAll = () => {
+		checkMissileAlienCollision(missilesRef, aliensRef);
 	};
 
 	const updateAll = () => {
@@ -108,35 +113,9 @@ export function Canvas() {
 		const animate = () => {
 			clearCanvas();
 
+			checkAll();
+
 			updateAll();
-
-			missilesRef.current.forEach((missile, missileIndex) => {
-				aliensRef.current.forEach((alien, alienIndex) => {
-					const rect1 = {
-						x: missile.position.x,
-						y: missile.position.y,
-						width: missile.width,
-						height: missile.height,
-					};
-					const rect2 = {
-						x: alien.position.x,
-						y: alien.position.y,
-						width: alien.width,
-						height: alien.height,
-					};
-
-					if (
-						areRectanglesColliding(rect1, rect2) &&
-						missile.from === 'player'
-					) {
-						aliensRef.current.splice(alienIndex, 1);
-						missilesRef.current.splice(missileIndex, 1);
-						// bum
-					} else {
-						// not bum
-					}
-				});
-			});
 
 			animationFrameId = requestAnimationFrame(animate);
 		};

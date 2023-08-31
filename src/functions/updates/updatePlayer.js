@@ -1,4 +1,4 @@
-import spaceship from '../images/spaceship.png';
+import spaceship from '../../images/spaceship.png';
 
 export const updatePlayer = (ctx, keys, player) => {
 	const spaceshipImage = new Image();

@@ -1,19 +1,15 @@
-import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../data/variables';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../../data/variables';
 
-import Missile from '../classes/Missile';
+import Missile from '../../classes/Missile';
 
-import music from '../sounds/laser_shot_1.mp3';
+import { laserShotOneSound } from '../soundEffects/laserShotOneSound';
 
-import { SPACESHIP_WIDTH } from '../data/variables';
+import { SPACESHIP_WIDTH } from '../../data/variables';
 
 export const shoot = (playerPosition, missilesRef, type = 'single_shot') => {
-	let audio;
-
 	if (type === 'single_shot') {
-		audio = new Audio(music);
+		laserShotOneSound();
 	}
-
-	audio.play();
 
 	let newMissiles = [...missilesRef.current].filter(
 		(missile) =>

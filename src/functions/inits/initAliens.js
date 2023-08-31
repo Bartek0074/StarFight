@@ -1,4 +1,4 @@
-import Alien from '../classes/Alien';
+import Alien from '../../classes/Alien';
 
 export const initAliens = (aliensRef) => {
 	let newAliens = [];
