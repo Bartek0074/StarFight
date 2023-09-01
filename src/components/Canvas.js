@@ -10,6 +10,7 @@ import { updateBackground } from '../functions/updates/updateBackground.js';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
 import { updateAliens } from '../functions/updates/updateAliens';
 import { updateMissiles } from '../functions/updates/updateMissiles.js';
+import { updateShards } from '../functions/updates/updateShards.js';
 
 import { shoot } from '../functions/actions/shoot.js';
 
@@ -36,6 +37,8 @@ export function Canvas() {
 
 	const starsRef = useRef([]);
 
+	const shardsRef = useRef([]);
+
 	const missilesRef = useRef([]);
 
 	let aliensRef = useRef([]);
@@ -46,7 +49,7 @@ export function Canvas() {
 	};
 
 	const checkAll = () => {
-		checkMissileAlienCollision(missilesRef, aliensRef);
+		checkMissileAlienCollision(missilesRef, aliensRef, shardsRef);
 	};
 
 	const updateAll = () => {
@@ -62,6 +65,8 @@ export function Canvas() {
 		updatePlayer(ctx, keysRef.current, player);
 
 		updateMissiles(ctx, missilesRef);
+
+		updateShards(ctx, shardsRef.current);
 	};
 
 	useEffect(() => {

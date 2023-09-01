@@ -18,7 +18,6 @@ export const initBackground = (starsRef) => {
 		const color = `${colors[randomColorsIndex]}`;
 
 		const alpha = (Math.random() * (0.9 - 0.2) + 0.2).toFixed(3);
-		console.log(alpha);
 
 		const star = new Star(
 			Math.floor(Math.random() * CANVAS_WIDTH - 10) + 5,

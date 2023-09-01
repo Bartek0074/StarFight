@@ -2,7 +2,13 @@ import { isCircleCollidingWithRectangle } from '../utils/isCircleCollidingWithRe
 
 import { laserImpactOneSound } from '../soundEffects/laserImpactOneSound.js';
 
-export const checkMissileAlienCollision = (missilesRef, aliensRef) => {
+import { addShards } from './addShards.js';
+
+export const checkMissileAlienCollision = (
+	missilesRef,
+	aliensRef,
+	shardsRef
+) => {
 	missilesRef.current.forEach((missile, missileIndex) => {
 		aliensRef.current.forEach((alien, alienIndex) => {
 			const circle = {
@@ -22,6 +28,8 @@ export const checkMissileAlienCollision = (missilesRef, aliensRef) => {
 
 				aliensRef.current.splice(alienIndex, 1);
 				missilesRef.current.splice(missileIndex, 1);
+
+				addShards(alien, missile, shardsRef);
 			} else {
 				// 	// not bum
 			}

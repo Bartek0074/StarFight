@@ -1,5 +1,5 @@
 export default class Missile {
-	constructor(from, x, y, radius, dx, dy, color = 'red') {
+	constructor(from, x, y, radius, dx, dy, color) {
 		this.from = from;
 
 		this.position = {
