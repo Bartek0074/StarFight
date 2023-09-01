@@ -20,8 +20,9 @@ export const shoot = (playerPosition, missilesRef, type = 'single_shot') => {
 	);
 
 	const missileRadius = 2;
-	const missileVelocityY = -5;
+	const missileVelocityY = -4;
 	const missileVelocityX = 0;
+	const missileColor= 'rgb(243, 36, 36)';
 
 	newMissiles.push(
 		new Missile(
@@ -30,7 +31,8 @@ export const shoot = (playerPosition, missilesRef, type = 'single_shot') => {
 			playerPosition.y,
 			missileRadius,
 			missileVelocityX,
-			missileVelocityY
+			missileVelocityY,
+			missileColor
 		)
 	);
 
