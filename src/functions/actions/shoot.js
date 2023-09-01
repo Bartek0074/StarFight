@@ -19,18 +19,16 @@ export const shoot = (playerPosition, missilesRef, type = 'single_shot') => {
 			missile.position.x < CANVAS_WIDTH
 	);
 
-	const missileWidth = 4;
-	const missileHeight = 6;
+	const missileRadius = 2;
 	const missileVelocityY = -5;
 	const missileVelocityX = 0;
 
 	newMissiles.push(
 		new Missile(
 			'player',
-			playerPosition.x + SPACESHIP_WIDTH / 2 - missileWidth / 2,
+			playerPosition.x + SPACESHIP_WIDTH / 2 - missileRadius / 2,
 			playerPosition.y,
-			missileWidth,
-			missileHeight,
+			missileRadius,
 			missileVelocityX,
 			missileVelocityY
 		)

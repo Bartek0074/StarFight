@@ -1,5 +1,5 @@
 export default class Missile {
-	constructor(from, x, y, width, height, dx, dy) {
+	constructor(from, x, y, radius, dx, dy, color = 'red') {
 		this.from = from;
 
 		this.position = {
@@ -9,13 +9,21 @@ export default class Missile {
 
 		this.velocity = { x: dx, y: dy };
 
-		this.width = width;
-		this.height = height;
+		this.radius = radius;
+
+		this.color = color;
 
 		this.draw = function (ctx) {
 			ctx.beginPath();
-			ctx.rect(this.position.x, this.position.y, this.width, this.height);
-			ctx.fillStyle = '#F45050';
+			ctx.arc(
+				this.position.x,
+				this.position.y,
+				this.radius,
+				0,
+				2 * Math.PI,
+				false
+			);
+			ctx.fillStyle = this.color;
 			ctx.fill();
 			ctx.closePath();
 		};
