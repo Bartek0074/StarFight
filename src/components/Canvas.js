@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useCanvas } from './CanvasContext';
 
+import { initBackground } from '../functions/inits/initBackground';
 import { initAliens } from '../functions/inits/initAliens.js';
 
 import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
 
+import { updateBackground } from '../functions/updates/updateBackground.js';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
 import { updateAliens } from '../functions/updates/updateAliens';
 import { updateMissiles } from '../functions/updates/updateMissiles.js';
@@ -32,11 +34,14 @@ export function Canvas() {
 
 	const [playerPosition, setPlayerPosition] = useState({ x: 0, y: 0 });
 
+	const starsRef = useRef([]);
+
 	const missilesRef = useRef([]);
 
 	let aliensRef = useRef([]);
 
 	const initAll = () => {
+		initBackground(starsRef);
 		initAliens(aliensRef);
 	};
 
@@ -47,6 +52,8 @@ export function Canvas() {
 	const updateAll = () => {
 		const canvas = canvasRef.current;
 		const ctx = canvas.getContext('2d');
+
+		updateBackground(ctx, starsRef.current);
 
 		updateAliens(ctx, aliensRef.current);
 
