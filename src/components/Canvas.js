@@ -66,7 +66,7 @@ export function Canvas() {
 
 		updateMissiles(ctx, missilesRef);
 
-		updateShards(ctx, shardsRef.current);
+		updateShards(ctx, shardsRef);
 	};
 
 	useEffect(() => {
