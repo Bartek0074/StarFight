@@ -1,5 +1,5 @@
 export default class Missile {
-	constructor(from, x, y, radius, dx, dy, color) {
+	constructor(from, x, y, radius, dx, dy, damage, color) {
 		this.from = from;
 
 		this.position = {
@@ -10,6 +10,8 @@ export default class Missile {
 		this.velocity = { x: dx, y: dy };
 
 		this.radius = radius;
+
+		this.damage = damage;
 
 		this.color = color;
 

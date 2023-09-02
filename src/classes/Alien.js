@@ -6,7 +6,7 @@ import {
 } from '../data/variables';
 
 export default class Alien {
-	constructor(x, y, explosionColors) {
+	constructor(x, y, hitpoints, explosionColors) {
 		this.position = {
 			x: x,
 			y: y,
@@ -18,6 +18,8 @@ export default class Alien {
 		this.velocity = { x: 0, y: 0 };
 
 		this.rotation = 0;
+
+		this.hitpoints = hitpoints;
 
 		this.explosionColors = explosionColors;
 

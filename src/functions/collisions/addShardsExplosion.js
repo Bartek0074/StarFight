@@ -1,7 +1,7 @@
 import Shard from '../../classes/Shard';
 
-export const addShards = (alien, missile, shardsRef) => {
-	const numberOfShards = Math.floor(Math.random() * 4) + 2;
+export const addShardsExplosion = (alien, missile, shardsRef) => {
+	const numberOfShards = Math.floor(Math.random() * 10) + 5;
 
 	const colors = [...alien.explosionColors];
 
@@ -12,9 +12,9 @@ export const addShards = (alien, missile, shardsRef) => {
 	);
 
 	for (let i = 0; i < numberOfShards; i++) {
-		const shardVelocity = (Math.random() * 0.7 + 0.3) * missileVelocity;
+		const shardVelocity = (Math.random() * 0.9 + 0.3) * missileVelocity;
 
-		const shardRadius = Math.random() + 1.5;
+		const shardRadius = Math.random() * 2 + 1.5;
 
 		const randomColorsIndex = Math.floor(Math.random() * colors.length);
 

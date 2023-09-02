@@ -2,7 +2,8 @@ import { isCircleCollidingWithRectangle } from '../utils/isCircleCollidingWithRe
 
 import { laserImpactOneSound } from '../soundEffects/laserImpactOneSound.js';
 
-import { addShards } from './addShards.js';
+import { addShardsImpact } from './addShardsImpact.js';
+import { addShardsExplosion } from './addShardsExplosion.js';
 
 export const checkMissileAlienCollision = (
 	missilesRef,
@@ -23,13 +24,21 @@ export const checkMissileAlienCollision = (
 				height: alien.height,
 			};
 			if (isCircleCollidingWithRectangle(circle, rect)) {
-				// bum
-				laserImpactOneSound();
-
-				aliensRef.current.splice(alienIndex, 1);
 				missilesRef.current.splice(missileIndex, 1);
 
-				addShards(alien, missile, shardsRef);
+				alien.hitpoints -= missile.damage;
+
+				if (alien.hitpoints <= 0) {
+					addShardsExplosion(alien, missile, shardsRef);
+					aliensRef.current.splice(alienIndex, 1);
+					// explosion
+				} else {
+					addShardsImpact(alien, missile, shardsRef);
+					laserImpactOneSound();
+					// impoct (not yet explosion)
+				}
+
+				console.log(alien.hitpoints);
 			} else {
 				// 	// not bum
 			}
