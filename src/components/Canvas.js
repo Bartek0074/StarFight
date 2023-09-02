@@ -5,6 +5,7 @@ import { initBackground } from '../functions/inits/initBackground';
 import { initAliens } from '../functions/inits/initAliens.js';
 
 import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
+import { checkMissilePlayerCollision } from '../functions/collisions/CheckMissilePlayerCollision';
 
 import { updateBackground } from '../functions/updates/updateBackground.js';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
@@ -50,6 +51,7 @@ export function Canvas() {
 	};
 
 	const checkAll = () => {
+		checkMissilePlayerCollision(missilesRef, player, shardsRef);
 		checkMissileAlienCollision(missilesRef, aliensRef, shardsRef);
 	};
 
