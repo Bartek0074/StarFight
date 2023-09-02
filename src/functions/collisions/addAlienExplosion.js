@@ -22,8 +22,8 @@ export const addAlienExplosion = (alien, missile, shardsRef) => {
 
 		shardsRef.current.push(
 			new Shard(
-				missile.position.x,
-				missile.position.y,
+				alien.position.x + alien.width/2,
+				alien.position.y + alien.height/2,
 				shardVelocity,
 				shardRadius,
 				color
