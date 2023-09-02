@@ -2,12 +2,13 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useCanvas } from './CanvasContext';
 
 import { initBackground } from '../functions/inits/initBackground';
-import { initAliens } from '../functions/inits/initAliens.js';
+import { initLvl1 } from '../functions/inits/initLvl1.js';
 
 import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
 import { checkMissilePlayerCollision } from '../functions/collisions/CheckMissilePlayerCollision';
 
 import { updateBackground } from '../functions/updates/updateBackground.js';
+import { updateLvl1 } from '../functions/updates/updateLvl1';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
 import { updateAliens } from '../functions/updates/updateAliens';
 import { updateMissiles } from '../functions/updates/updateMissiles.js';
@@ -47,7 +48,7 @@ export function Canvas() {
 
 	const initAll = () => {
 		initBackground(starsRef);
-		initAliens(aliensRef);
+		initLvl1(aliensRef);
 	};
 
 	const checkAll = () => {
@@ -55,7 +56,7 @@ export function Canvas() {
 		checkMissileAlienCollision(missilesRef, aliensRef, shardsRef);
 	};
 
-	const updateAll = () => {
+	const updateAll = (frames) => {
 		const canvas = canvasRef.current;
 		const ctx = canvas.getContext('2d');
 
@@ -129,9 +130,10 @@ export function Canvas() {
 
 		const animate = () => {
 			frames++;
-			if (frames % 30 === 0) {
+			if (frames % 30 === 0 && frames > 60) {
 				// Functions to be callled every 30 frames (+- 0.5 second)
 				alienShot(aliensRef, missilesRef);
+				updateLvl1(frames, aliensRef);
 			}
 			// console.log(frames)
 			clearCanvas();

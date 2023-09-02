@@ -6,7 +6,17 @@ import {
 } from '../data/variables';
 
 export default class Alien {
-	constructor(x, y, hitpoints, colors) {
+	constructor(
+		x,
+		y,
+		velocityX,
+		velocityY,
+		angle,
+		velocityAngle,
+		hitpoints,
+		colors,
+		mode
+	) {
 		this.position = {
 			x: x,
 			y: y,
@@ -15,7 +25,7 @@ export default class Alien {
 		this.width = ALIEN_WIDTH;
 		this.height = ALIEN_HEIGHT;
 
-		this.velocity = { x: 0, y: 0 };
+		this.velocity = { x: velocityX, y: velocityY };
 
 		this.rotation = 0;
 
@@ -23,6 +33,12 @@ export default class Alien {
 		this.maxHitpoints = hitpoints;
 
 		this.colors = colors;
+
+		this.mode = mode;
+
+		this.angle = angle;
+
+		this.velocityAngle = velocityAngle;
 
 		this.draw = function (ctx, image) {
 			if (image) {
@@ -92,12 +108,35 @@ export default class Alien {
 		this.update = function (ctx, image) {
 			this.draw(ctx, image);
 
-			if (
-				this.position.x + this.velocity.x >= 0 &&
-				this.position.x + this.width + this.velocity.x < CANVAS_WIDTH
-			) {
-				this.position.x += this.velocity.x;
+			if (this.mode === 'free_flying') {
+				this.velocity.x =
+					this.velocityAngle * Math.cos((this.angle * Math.PI) / 180);
+				this.velocity.y =
+					this.velocityAngle * Math.sin((this.angle * Math.PI) / 180);
+				if (
+					this.position.x + this.velocity.x < 10 ||
+					this.position.x + this.width + this.velocity.x > CANVAS_WIDTH - 10
+				) {
+					const radians = Math.atan2(this.velocity.y, -this.velocity.x);
+
+					const newAngle = (radians * 180) / Math.PI;
+
+					this.angle = newAngle;
+				}
+				if (
+					this.position.y + this.velocity.y < 10 ||
+					this.position.y + this.height + this.velocity.y > CANVAS_WIDTH - 150
+				) {
+					const radians = Math.atan2(-this.velocity.y, this.velocity.x);
+
+					const newAngle = (radians * 180) / Math.PI;
+
+					this.angle = newAngle;
+				}
 			}
+
+			this.position.x += this.velocity.x;
+			this.position.y += this.velocity.y;
 		};
 	}
 }
