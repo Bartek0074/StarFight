@@ -3,7 +3,7 @@ import Alien from '../../classes/Alien';
 export const initAliens = (aliensRef) => {
 	let newAliens = [];
 
-	const hitpoints = 30;
+	const hitpoints = 50;
 
 	const explosionColors = ['rgb(211, 208, 79)', 'rgb(23, 89, 74)'];
 
