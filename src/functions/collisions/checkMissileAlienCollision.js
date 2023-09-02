@@ -39,8 +39,6 @@ export const checkMissileAlienCollision = (
 					laserImpactOneSound();
 					// impoct (not yet explosion)
 				}
-
-				console.log(alien.hitpoints);
 			} else {
 				// 	// not bum
 			}
