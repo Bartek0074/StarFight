@@ -20,7 +20,7 @@ export default class Player {
 		this.hitpoints = 100;
 		this.maxHitpoints = 100;
 
-		this.colors = ['#FAF3E3', '#1A4D2C'];
+		this.colors = ['#FAF3E3', '#1A4D2C', '#FD9E28'];
 
 		this.dead = false;
 
