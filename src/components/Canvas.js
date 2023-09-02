@@ -13,6 +13,7 @@ import { updateMissiles } from '../functions/updates/updateMissiles.js';
 import { updateShards } from '../functions/updates/updateShards.js';
 
 import { shoot } from '../functions/actions/shoot.js';
+import { alienShot } from '../functions/actions/alienShot';
 
 import Player from '../classes/Player';
 
@@ -116,6 +117,8 @@ export function Canvas() {
 	}, []);
 
 	useEffect(() => {
+		let frames = 0;
+
 		let animationFrameId;
 
 		prepareCanvas();
@@ -123,6 +126,12 @@ export function Canvas() {
 		initAll();
 
 		const animate = () => {
+			frames++;
+			if (frames % 30 === 0) {
+				// Functions to be callled every 30 frames (+- 0.5 second)
+				alienShot(aliensRef, missilesRef);
+			}
+			// console.log(frames)
 			clearCanvas();
 
 			checkAll();

@@ -6,7 +6,7 @@ import {
 } from '../data/variables';
 
 export default class Alien {
-	constructor(x, y, hitpoints, explosionColors) {
+	constructor(x, y, hitpoints, colors) {
 		this.position = {
 			x: x,
 			y: y,
@@ -22,7 +22,7 @@ export default class Alien {
 		this.hitpoints = hitpoints;
 		this.maxHitpoints = hitpoints;
 
-		this.explosionColors = explosionColors;
+		this.colors = colors;
 
 		this.draw = function (ctx, image) {
 			if (image) {

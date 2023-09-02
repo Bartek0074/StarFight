@@ -1,9 +1,9 @@
 import Shard from '../../classes/Shard';
 
-export const addShardsImpact = (alien, missile, shardsRef) => {
+export const addAlienImpact = (alien, missile, shardsRef) => {
 	const numberOfShards = Math.floor(Math.random() * 4) + 2;
 
-	const colors = [...alien.explosionColors];
+	const colors = [...alien.colors];
 
 	colors.push(missile.color);
 
