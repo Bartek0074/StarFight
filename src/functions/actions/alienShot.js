@@ -1,5 +1,7 @@
 import { ALIEN_SHOT_CHANCE } from '../../data/variables';
 
+import { alienShotSound } from '../soundEffects/alienShotSound';
+
 import Missile from '../../classes/Missile';
 
 export const alienShot = (aliensRef, missilesRef) => {
@@ -7,6 +9,8 @@ export const alienShot = (aliensRef, missilesRef) => {
 		const drawnChance = Math.random();
 
 		if (drawnChance < ALIEN_SHOT_CHANCE) {
+			alienShotSound()
+
 			const missileX = alien.position.x + alien.width / 2;
 			const missileY = alien.position.y + alien.height;
 
