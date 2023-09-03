@@ -6,6 +6,9 @@ import { alienExplosionSound } from '../soundEffects/alienExplosionSound.js';
 import { addAlienImpact } from './addAlienImpact.js';
 import { addAlienExplosion } from './addAlienExplosion.js';
 
+import { addBossImpact } from './addBossImpact.js';
+import { addBossExplosion } from './addBossExplosion.js';
+
 export const checkMissileAlienCollision = (
 	missilesRef,
 	aliensRef,
@@ -33,17 +36,24 @@ export const checkMissileAlienCollision = (
 				alien.hitpoints -= missile.damage;
 
 				if (alien.hitpoints <= 0) {
-					addAlienExplosion(alien, missile, shardsRef);
-					aliensRef.current.splice(alienIndex, 1);
-					alienExplosionSound();
 					// explosion
+					aliensRef.current.splice(alienIndex, 1);
+					if (alien.type.includes('boss')) {
+						addBossExplosion(alien, missile, shardsRef);
+					} else {
+						addAlienExplosion(alien, missile, shardsRef);
+						alienExplosionSound();
+					}
 				} else {
-					addAlienImpact(alien, missile, shardsRef);
-					laserImpactOneSound();
-					// impoct (not yet explosion)
+					// impact (not yet explosion)
+					if (alien.type.includes('boss')) {
+						addBossImpact(alien, missile, shardsRef);
+						laserImpactOneSound();
+					} else {
+						addAlienImpact(alien, missile, shardsRef);
+						laserImpactOneSound();
+					}
 				}
-			} else {
-				// 	// not bum
 			}
 		});
 	});
