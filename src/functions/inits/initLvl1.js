@@ -9,6 +9,8 @@ export const initLvl1 = (aliensRef) => {
 	const mode = 'flyingIn';
 	const y1 = -178;
 	const y2 = -118;
+	const width = 40;
+	const height = 40;
 	const velocityX = 0;
 	const velocityY = 2;
 	const angle = 90;
@@ -24,6 +26,8 @@ export const initLvl1 = (aliensRef) => {
 				mode,
 				x1,
 				y1,
+				width,
+				height,
 				velocityX,
 				velocityY,
 				angle,
@@ -41,6 +45,8 @@ export const initLvl1 = (aliensRef) => {
 				mode,
 				x2,
 				y2,
+				width,
+				height,
 				velocityX,
 				velocityY,
 				angle,

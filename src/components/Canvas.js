@@ -3,12 +3,14 @@ import { useCanvas } from './CanvasContext';
 
 import { initBackground } from '../functions/inits/initBackground';
 import { initLvl1 } from '../functions/inits/initLvl1.js';
+import { initLvl2 } from '../functions/inits/initLvl2.js';
 
 import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
 import { checkMissilePlayerCollision } from '../functions/collisions/CheckMissilePlayerCollision';
 
 import { updateBackground } from '../functions/updates/updateBackground.js';
 import { updateLvl1 } from '../functions/updates/updateLvl1';
+import { updateLvl2 } from '../functions/updates/updateLvl2';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
 import { updateAliens } from '../functions/updates/updateAliens';
 import { updateMissiles } from '../functions/updates/updateMissiles.js';
@@ -48,7 +50,8 @@ export function Canvas() {
 
 	const initAll = () => {
 		initBackground(starsRef);
-		initLvl1(aliensRef);
+		// initLvl1(aliensRef);
+		initLvl2(aliensRef);
 	};
 
 	const checkAll = () => {
@@ -133,7 +136,7 @@ export function Canvas() {
 			if (frames % 30 === 0 && frames > 60) {
 				// Functions to be callled every 30 frames (+- 0.5 second)
 				alienShot(aliensRef, missilesRef);
-				updateLvl1(frames, aliensRef);
+				updateLvl2(frames, aliensRef);
 			}
 			// console.log(frames)
 			clearCanvas();

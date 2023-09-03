@@ -1,9 +1,6 @@
-import {
-	CANVAS_WIDTH,
-	CANVAS_HEIGHT,
-	ALIEN_WIDTH,
-	ALIEN_HEIGHT,
-} from '../data/variables';
+import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../data/variables';
+import froggy from '../images/froggy.png';
+import froggy_boss from '../images/froggy_boss.png';
 
 export default class Alien {
 	constructor(
@@ -13,6 +10,8 @@ export default class Alien {
 		mode,
 		x,
 		y,
+		width,
+		height,
 		velocityX,
 		velocityY,
 		angle,
@@ -32,11 +31,23 @@ export default class Alien {
 
 		this.maxHitpoints = hitpoints;
 
-		this.width = ALIEN_WIDTH;
-		this.height = ALIEN_HEIGHT;
+		this.width = width;
+		this.height = height;
 
-		this.draw = function (ctx, image) {
-			if (image) {
+		this.bottomBorderFreeFlying = this.type.includes('boss')
+			? 250
+			: CANVAS_HEIGHT - 150;
+
+		this.img = new Image();
+
+		if (this.type === 'froggy') {
+			this.img.src = froggy;
+		} else if (this.type === 'froggy_boss') {
+			this.img.src = froggy_boss;
+		}
+
+		this.draw = function (ctx) {
+			if (this.img) {
 				ctx.save();
 
 				ctx.translate(
@@ -52,7 +63,7 @@ export default class Alien {
 				);
 
 				ctx.drawImage(
-					image,
+					this.img,
 					this.position.x,
 					this.position.y,
 					this.width,
@@ -100,8 +111,8 @@ export default class Alien {
 			);
 		};
 
-		this.update = function (ctx, image) {
-			this.draw(ctx, image);
+		this.update = function (ctx) {
+			this.draw(ctx);
 
 			if (this.mode === 'free_flying') {
 				this.velocity.x =
@@ -119,13 +130,20 @@ export default class Alien {
 					this.angle = newAngle;
 				} else if (
 					this.position.y + this.velocity.y < 10 ||
-					this.position.y + this.height + this.velocity.y > CANVAS_HEIGHT - 150
+					this.position.y + this.height + this.velocity.y >
+						this.bottomBorderFreeFlying
 				) {
 					const radians = Math.atan2(-this.velocity.y, this.velocity.x);
 
 					const newAngle = (radians * 180) / Math.PI;
 
 					this.angle = newAngle;
+				}
+			} else if (this.mode === 'flying_through_borders') {
+				if (this.position.x + this.width + this.velocity.x < 0) {
+					this.position.x = CANVAS_WIDTH;
+				} else if (this.position.x + this.velocity.x > CANVAS_WIDTH) {
+					this.position.x = -this.width;
 				}
 			}
 
