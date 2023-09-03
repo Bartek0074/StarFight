@@ -1,7 +1,7 @@
 import { ALIEN_FLY_CHANCE } from '../../data/variables';
 
 export const updateLvl1 = (frames, aliensRef) => {
-	if (aliensRef.current.length >= 8) {
+	if (aliensRef.current.length > 5) {
 		aliensRef.current.forEach((alien) => {
 			if (frames === 120) {
 				alien.velocity.y = 0;

@@ -7,38 +7,33 @@ import {
 
 export default class Alien {
 	constructor(
+		type,
+		colors,
+		hitpoints,
+		mode,
 		x,
 		y,
 		velocityX,
 		velocityY,
 		angle,
-		velocityAngle,
-		hitpoints,
-		colors,
-		mode
+		freeFlyingVelocity
 	) {
+		this.type = type;
+		this.colors = colors;
+		this.hitpoints = hitpoints;
+		this.mode = mode;
 		this.position = {
 			x: x,
 			y: y,
 		};
+		this.velocity = { x: velocityX, y: velocityY };
+		this.angle = angle;
+		this.freeFlyingVelocity = freeFlyingVelocity;
+
+		this.maxHitpoints = hitpoints;
 
 		this.width = ALIEN_WIDTH;
 		this.height = ALIEN_HEIGHT;
-
-		this.velocity = { x: velocityX, y: velocityY };
-
-		this.rotation = 0;
-
-		this.hitpoints = hitpoints;
-		this.maxHitpoints = hitpoints;
-
-		this.colors = colors;
-
-		this.mode = mode;
-
-		this.angle = angle;
-
-		this.velocityAngle = velocityAngle;
 
 		this.draw = function (ctx, image) {
 			if (image) {
@@ -110,9 +105,9 @@ export default class Alien {
 
 			if (this.mode === 'free_flying') {
 				this.velocity.x =
-					this.velocityAngle * Math.cos((this.angle * Math.PI) / 180);
+					this.freeFlyingVelocity * Math.cos((this.angle * Math.PI) / 180);
 				this.velocity.y =
-					this.velocityAngle * Math.sin((this.angle * Math.PI) / 180);
+					this.freeFlyingVelocity * Math.sin((this.angle * Math.PI) / 180);
 				if (
 					this.position.x + this.velocity.x < 10 ||
 					this.position.x + this.width + this.velocity.x > CANVAS_WIDTH - 10
@@ -122,10 +117,9 @@ export default class Alien {
 					const newAngle = (radians * 180) / Math.PI;
 
 					this.angle = newAngle;
-				}
-				if (
+				} else if (
 					this.position.y + this.velocity.y < 10 ||
-					this.position.y + this.height + this.velocity.y > CANVAS_WIDTH - 150
+					this.position.y + this.height + this.velocity.y > CANVAS_HEIGHT - 150
 				) {
 					const radians = Math.atan2(-this.velocity.y, this.velocity.x);
 
