@@ -40,6 +40,14 @@ export default class Alien {
 
 		this.img = new Image();
 
+		this.healthBarHeight = 2.5;
+		this.healthBarTopMargin = 8;
+
+		if (this.type.includes('boss')) {
+			this.healthBarHeight = 4;
+			this.healthBarTopMargin = 12;
+		}
+
 		if (this.type === 'froggy') {
 			this.img.src = froggy;
 		} else if (this.type === 'froggy_boss') {
@@ -84,8 +92,7 @@ export default class Alien {
 			const healthRatio = this.hitpoints / this.maxHitpoints;
 
 			const healthBarWidth = this.width * healthRatio;
-			const healthBarHeight = 2.5; // Szerokość paska życia
-			const healthBarY = this.position.y - 8; // Położenie paska życia nad alienem
+			const healthBarY = this.position.y - this.healthBarTopMargin; // Położenie paska życia nad alienem
 			const remainingHealthBarWidth = this.width * (1 - healthRatio);
 			const healthBarX = this.position.x;
 
@@ -107,7 +114,7 @@ export default class Alien {
 				healthBarX + remainingHealthBarWidth / 2,
 				healthBarY,
 				healthBarWidth,
-				healthBarHeight
+				this.healthBarHeight
 			);
 		};
 
