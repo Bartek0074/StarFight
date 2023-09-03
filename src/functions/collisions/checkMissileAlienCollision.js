@@ -2,6 +2,7 @@ import { isCircleCollidingWithRectangle } from '../utils/isCircleCollidingWithRe
 
 import { laserImpactOneSound } from '../soundEffects/laserImpactOneSound.js';
 import { alienExplosionSound } from '../soundEffects/alienExplosionSound.js';
+import { bossExplosionSound } from '../soundEffects/bossExplosionSound.js';
 
 import { addAlienImpact } from './addAlienImpact.js';
 import { addAlienExplosion } from './addAlienExplosion.js';
@@ -40,6 +41,7 @@ export const checkMissileAlienCollision = (
 					aliensRef.current.splice(alienIndex, 1);
 					if (alien.type.includes('boss')) {
 						addBossExplosion(alien, missile, shardsRef);
+						bossExplosionSound();
 					} else {
 						addAlienExplosion(alien, missile, shardsRef);
 						alienExplosionSound();

@@ -49,44 +49,44 @@ export const initLvl2 = (aliensRef) => {
 		)
 	);
 
-	// for (let i = 0; i < 12; i++) {
-	// 	const alien_x1 = i * 61.75 - CANVAS_WIDTH - 138;
-	// 	newAliens.push(
-	// 		new Alien(
-	// 			alien_type,
-	// 			alien_colors,
-	// 			alien_hitpoints,
-	// 			alien_mode,
-	// 			alien_x1,
-	// 			alien_y1,
-	// 			alien_width,
-	// 			alien_height,
-	// 			alien_velocityX1,
-	// 			alien_velocityY,
-	// 			alien_angle,
-	// 			alien_freeFlyingVelocity
-	// 		)
-	// 	);
-	// }
-	// for (let i = 0; i < 12; i++) {
-	// 	const alien_x1 = i * 61.75 + CANVAS_WIDTH + 138;
-	// 	newAliens.push(
-	// 		new Alien(
-	// 			alien_type,
-	// 			alien_colors,
-	// 			alien_hitpoints,
-	// 			alien_mode,
-	// 			alien_x1,
-	// 			alien_y2,
-	// 			alien_width,
-	// 			alien_height,
-	// 			alien_velocityX2,
-	// 			alien_velocityY,
-	// 			alien_angle,
-	// 			alien_freeFlyingVelocity
-	// 		)
-	// 	);
-	// }
+	for (let i = 0; i < 12; i++) {
+		const alien_x1 = i * 61.75 - CANVAS_WIDTH - 138;
+		newAliens.push(
+			new Alien(
+				alien_type,
+				alien_colors,
+				alien_hitpoints,
+				alien_mode,
+				alien_x1,
+				alien_y1,
+				alien_width,
+				alien_height,
+				alien_velocityX1,
+				alien_velocityY,
+				alien_angle,
+				alien_freeFlyingVelocity
+			)
+		);
+	}
+	for (let i = 0; i < 12; i++) {
+		const alien_x1 = i * 61.75 + CANVAS_WIDTH + 138;
+		newAliens.push(
+			new Alien(
+				alien_type,
+				alien_colors,
+				alien_hitpoints,
+				alien_mode,
+				alien_x1,
+				alien_y2,
+				alien_width,
+				alien_height,
+				alien_velocityX2,
+				alien_velocityY,
+				alien_angle,
+				alien_freeFlyingVelocity
+			)
+		);
+	}
 
 	aliensRef.current = newAliens;
 };
