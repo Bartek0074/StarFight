@@ -43,12 +43,8 @@ export const alienShot = (aliensRef, missilesRef) => {
 			const bossMissileX = alien.position.x + alien.width / 2;
 			const bossMissileY = alien.position.y + alien.height;
 			const bossMissileRadius = 2.5;
-			const bossMissileVelocityY1 = Math.random() * 3 + 4;
-			const bossMissileVelocityX1 = Math.random() * 2 - 1;
-			const bossMissileVelocityY2 = Math.random() * 3 + 4;
-			const bossMissileVelocityX2 = Math.random() * 2 - 1;
-			const bossMissileVelocityY3 = Math.random() * 3 + 4;
-			const bossMissileVelocityX3 = Math.random() * 2 - 1;
+			const bossMissileVelocityX = Math.random() * 2 - 1;
+			const bossMissileVelocityY = Math.random() * 3 + 4;
 			const bossMissileDamage = 10;
 
 			const colors = alien.colors;
@@ -58,7 +54,7 @@ export const alienShot = (aliensRef, missilesRef) => {
 
 			const shotTypeChance = Math.random();
 
-			if (shotTypeChance < 0.5) {
+			if (shotTypeChance < 0.4) {
 				// SINGLE SHOT
 				alienShotSound();
 				missilesRef.current.push(
@@ -67,78 +63,64 @@ export const alienShot = (aliensRef, missilesRef) => {
 						bossMissileX,
 						bossMissileY,
 						bossMissileRadius,
-						bossMissileVelocityX1,
-						bossMissileVelocityY1,
+						bossMissileVelocityX,
+						bossMissileVelocityY,
 						bossMissileDamage,
 						bossMissileColor
 					)
 				);
-			} else if (shotTypeChance < 0.75) {
+			} else if (shotTypeChance < 0.7) {
 				// DOUBLE SHOT
 				alienShotSound();
-				missilesRef.current.push(
-					new Missile(
-						'alien',
-						bossMissileX - 10,
-						bossMissileY,
-						bossMissileRadius,
-						bossMissileVelocityX1,
-						bossMissileVelocityY1,
-						bossMissileDamage,
-						bossMissileColor
-					)
-				);
-				missilesRef.current.push(
-					new Missile(
-						'alien',
-						bossMissileX + 10,
-						bossMissileY,
-						bossMissileRadius,
-						bossMissileVelocityX2,
-						bossMissileVelocityY2,
-						bossMissileDamage,
-						bossMissileColor
-					)
-				);
-			} else if (shotTypeChance < 0.9) {
+
+				for (let i = 0; i < 2; i++) {
+					const randomMissileColorsIndex = Math.floor(
+						Math.random() * colors.length
+					);
+					const bossMultipleShotMissileColor = `${colors[randomMissileColorsIndex]}`;
+
+					const bossMultipleShotMissileVelocityX = Math.random() * 2 - 1;
+					const bossMutlipleShotMissileVelocityY = Math.random() * 3 + 4;
+
+					missilesRef.current.push(
+						new Missile(
+							'alien',
+							bossMissileX - 10 + i * 20,
+							bossMissileY,
+							bossMissileRadius,
+							bossMultipleShotMissileVelocityX,
+							bossMutlipleShotMissileVelocityY,
+							bossMissileDamage,
+							bossMultipleShotMissileColor
+						)
+					);
+				}
+			} else if (shotTypeChance < 0.85) {
 				// TRIPLE SHOT
 				alienShotSound();
-				missilesRef.current.push(
-					new Missile(
-						'alien',
-						bossMissileX - 20,
-						bossMissileY,
-						bossMissileRadius,
-						bossMissileVelocityX1,
-						bossMissileVelocityY1,
-						bossMissileDamage,
-						bossMissileColor
-					)
-				);
-				missilesRef.current.push(
-					new Missile(
-						'alien',
-						bossMissileX,
-						bossMissileY,
-						bossMissileRadius,
-						bossMissileVelocityX2,
-						bossMissileVelocityY2,
-						bossMissileDamage,
-						bossMissileColor
-					)
-				);
-				missilesRef.current.push(
-					new Missile(
-						'alien',
-						bossMissileX + 20,
-						bossMissileY,
-						bossMissileRadius,
-						bossMissileVelocityX3,
-						bossMissileVelocityY3,
-						bossMissileDamage,
-						bossMissileColor
-					)
-				);
+
+				for (let i = 0; i < 3; i++) {
+					const randomMissileColorsIndex = Math.floor(
+						Math.random() * colors.length
+					);
+					const bossMultipleShotMissileColor = `${colors[randomMissileColorsIndex]}`;
+
+					const bossMultipleShotMissileVelocityX = Math.random() * 2 - 1;
+					const bossMutlipleShotMissileVelocityY = Math.random() * 3 + 4;
+
+					missilesRef.current.push(
+						new Missile(
+							'alien',
+							bossMissileX - 20 + i * 20,
+							bossMissileY,
+							bossMissileRadius,
+							bossMultipleShotMissileVelocityX,
+							bossMutlipleShotMissileVelocityY,
+							bossMissileDamage,
+							bossMultipleShotMissileColor
+						)
+					);
+				}
 			} else {
 				// SEVERAL SHOTS
 				bossSeveralShotSound();
@@ -147,7 +129,7 @@ export const alienShot = (aliensRef, missilesRef) => {
 					const bossSeveralMissileX = bossMissileX + Math.random() * 30 - 15;
 					const bossSeveralMissileY = bossMissileY + Math.random() * 10 - 5;
 					const bossSeveralMissileRadius = Math.random() + 2;
-					const bossSeveralMissileVelocityX = Math.random() * 2 - 1;
+					const bossSeveralMissileVelocityX = Math.random() * 3 - 1.5;
 					const bossSeveralMissileVelocityY = Math.random() * 3 + 5;
 
 					const randomMissileColorsIndex = Math.floor(
