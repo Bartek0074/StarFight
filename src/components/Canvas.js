@@ -65,7 +65,7 @@ export function Canvas() {
 
 		updateBackground(ctx, starsRef.current);
 
-		updateAliens(ctx, aliensRef.current);
+		updateAliens(ctx, aliensRef.current, frames);
 
 		setPlayerPosition({ x: player.position.x, y: player.position.y });
 
@@ -143,7 +143,7 @@ export function Canvas() {
 
 			checkAll();
 
-			updateAll();
+			updateAll(frames);
 
 			animationFrameId = requestAnimationFrame(animate);
 		};

@@ -1,6 +1,16 @@
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '../data/variables';
-import froggy from '../images/froggy.png';
-import froggy_boss from '../images/froggy_boss.png';
+import froggy1 from '../images/froggy/froggy1.png';
+import froggy2 from '../images/froggy/froggy2.png';
+import froggy3 from '../images/froggy/froggy3.png';
+import froggy4 from '../images/froggy/froggy4.png';
+import froggy_boss from '../images/froggy_boss/froggy_boss.png';
+import froggy_boss2 from '../images/froggy_boss/froggy_boss2.png';
+import froggy_boss3 from '../images/froggy_boss/froggy_boss3.png';
+import froggy_boss4 from '../images/froggy_boss/froggy_boss4.png';
+import froggy_boss5 from '../images/froggy_boss/froggy_boss5.png';
+import froggy_boss6 from '../images/froggy_boss/froggy_boss6.png';
+import froggy_boss7 from '../images/froggy_boss/froggy_boss7.png';
+import froggy_boss8 from '../images/froggy_boss/froggy_boss8.png';
 
 export default class Alien {
 	constructor(
@@ -49,10 +59,26 @@ export default class Alien {
 		}
 
 		if (this.type === 'froggy') {
-			this.img.src = froggy;
+			this.frames = [froggy1, froggy2, froggy3, froggy4, froggy3, froggy2];
 		} else if (this.type === 'froggy_boss') {
-			this.img.src = froggy_boss;
+			this.frames = [
+				froggy_boss,
+				froggy_boss2,
+				froggy_boss3,
+				froggy_boss4,
+				froggy_boss5,
+				froggy_boss6,
+				froggy_boss7,
+				froggy_boss8,
+				froggy_boss7,
+				froggy_boss6,
+				froggy_boss5,
+				froggy_boss4,
+				froggy_boss3,
+				froggy_boss2,
+			];
 		}
+		this.frameIndex = 0;
 
 		this.draw = function (ctx) {
 			if (this.img) {
