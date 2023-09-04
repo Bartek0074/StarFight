@@ -19,6 +19,8 @@ import { updateShards } from '../functions/updates/updateShards.js';
 import { shoot } from '../functions/actions/shoot.js';
 import { alienShot } from '../functions/actions/alienShot';
 
+import { checkWin } from '../functions/actions/checkWin';
+
 import Player from '../classes/Player';
 
 export function Canvas() {
@@ -47,11 +49,17 @@ export function Canvas() {
 	const missilesRef = useRef([]);
 
 	let aliensRef = useRef([]);
+	const lvl = useRef(1);
+	const frames = useRef(0);
 
 	const initAll = () => {
 		initBackground(starsRef);
-		// initLvl1(aliensRef);
-		initLvl2(aliensRef);
+
+		if (lvl.current === 1) {
+			initLvl1(aliensRef);
+		} else if (lvl.current === 2) {
+			initLvl2(aliensRef);
+		}
 	};
 
 	const checkAll = () => {
@@ -123,8 +131,6 @@ export function Canvas() {
 	}, []);
 
 	useEffect(() => {
-		let frames = 0;
-
 		let animationFrameId;
 
 		prepareCanvas();
@@ -132,18 +138,25 @@ export function Canvas() {
 		initAll();
 
 		const animate = () => {
-			frames++;
-			if (frames % 30 === 0 && frames > 60) {
+			frames.current++;
+			if (frames.current % 30 === 0 && frames.current > 60) {
 				// Functions to be callled every 30 frames (+- 0.5 second)
 				alienShot(aliensRef, missilesRef);
-				updateLvl2(frames, aliensRef);
+
+				if (lvl.current === 1) {
+					updateLvl1(frames.current, aliensRef);
+				} else if (lvl.current === 2) {
+					updateLvl2(frames.current, aliensRef);
+				}
 			}
 			// console.log(frames)
 			clearCanvas();
 
 			checkAll();
 
-			updateAll(frames);
+			updateAll(frames.current);
+
+			checkWin(aliensRef, lvl);
 
 			animationFrameId = requestAnimationFrame(animate);
 		};
@@ -154,6 +167,15 @@ export function Canvas() {
 			cancelAnimationFrame(animationFrameId);
 		};
 	}, []);
+
+	useEffect(() => {
+		frames.current = 0;
+		if (lvl.current === 1) {
+			initLvl1(aliensRef);
+		} else if (lvl.current === 2) {
+			initLvl2(aliensRef);
+		}
+	}, [lvl.current]);
 
 	useEffect(() => {
 		setShootCooldown(true);
