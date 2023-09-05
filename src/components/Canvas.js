@@ -4,6 +4,7 @@ import { useCanvas } from './CanvasContext';
 import { initBackground } from '../functions/inits/initBackground';
 import { initLvl1 } from '../functions/inits/initLvl1.js';
 import { initLvl2 } from '../functions/inits/initLvl2.js';
+import { initLvl3 } from '../functions/inits/initLvl3.js';
 
 import { checkMissileAlienCollision } from '../functions/collisions/checkMissileAlienCollision.js';
 import { checkMissilePlayerCollision } from '../functions/collisions/CheckMissilePlayerCollision';
@@ -11,6 +12,7 @@ import { checkMissilePlayerCollision } from '../functions/collisions/CheckMissil
 import { updateBackground } from '../functions/updates/updateBackground.js';
 import { updateLvl1 } from '../functions/updates/updateLvl1';
 import { updateLvl2 } from '../functions/updates/updateLvl2';
+import { updateLvl3 } from '../functions/updates/updateLvl3';
 import { updatePlayer } from '../functions/updates/updatePlayer.js';
 import { updateAliens } from '../functions/updates/updateAliens';
 import { updateMissiles } from '../functions/updates/updateMissiles.js';
@@ -59,6 +61,8 @@ export function Canvas() {
 			initLvl1(aliensRef);
 		} else if (lvl.current === 2) {
 			initLvl2(aliensRef);
+		} else if (lvl.current === 3) {
+			initLvl3(aliensRef);
 		}
 	};
 
@@ -147,6 +151,8 @@ export function Canvas() {
 					updateLvl1(frames.current, aliensRef);
 				} else if (lvl.current === 2) {
 					updateLvl2(frames.current, aliensRef);
+				} else if (lvl.current === 3) {
+					updateLvl3(frames.current, aliensRef);
 				}
 			}
 			// console.log(frames)
@@ -174,6 +180,8 @@ export function Canvas() {
 			initLvl1(aliensRef);
 		} else if (lvl.current === 2) {
 			initLvl2(aliensRef);
+		} else if (lvl.current === 3) {
+			initLvl3(aliensRef);
 		}
 	}, [lvl.current]);
 
