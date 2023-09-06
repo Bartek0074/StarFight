@@ -1,3 +1,5 @@
+import { SPACESHIP_SPEED } from '../../data/variables';
+
 import spaceship from '../../images/spaceship.png';
 
 export const updatePlayer = (ctx, keys, player) => {
@@ -10,10 +12,10 @@ export const updatePlayer = (ctx, keys, player) => {
 		player.velocity.x = 0;
 		player.rotation = -0;
 	} else if (keys.a.pressed === true) {
-		player.velocity.x = -5;
+		player.velocity.x = -SPACESHIP_SPEED;
 		player.rotation = -0.15;
 	} else if (keys.d.pressed === true) {
-		player.velocity.x = 5;
+		player.velocity.x = SPACESHIP_SPEED;
 		player.rotation = 0.15;
 	} else {
 		player.velocity.x = 0;
