@@ -56,14 +56,15 @@ export function Canvas() {
 
 	const initAll = () => {
 		initBackground(starsRef);
+		initLvl1(aliensRef);
 
-		if (lvl.current === 1) {
-			initLvl1(aliensRef);
-		} else if (lvl.current === 2) {
-			initLvl2(aliensRef);
-		} else if (lvl.current === 3) {
-			initLvl3(aliensRef);
-		}
+		// if ((lvl.current % 3) + 1 === 1) {
+		// 	initLvl1(aliensRef);
+		// } else if ((lvl.current % 3) + 1 === 2) {
+		// 	initLvl2(aliensRef);
+		// } else if ((lvl.current % 3) + 1 === 3) {
+		// 	initLvl3(aliensRef);
+		// }
 	};
 
 	const checkAll = () => {
@@ -147,11 +148,11 @@ export function Canvas() {
 				// Functions to be callled every 30 frames (+- 0.5 second)
 				alienShot(aliensRef, missilesRef);
 
-				if (lvl.current === 1) {
+				if (lvl.current % 3 === 1) {
 					updateLvl1(frames.current, aliensRef);
-				} else if (lvl.current === 2) {
+				} else if (lvl.current % 3 === 2) {
 					updateLvl2(frames.current, aliensRef);
-				} else if (lvl.current === 3) {
+				} else if (lvl.current % 3 === 0) {
 					updateLvl3(frames.current, aliensRef);
 				}
 			}
@@ -176,11 +177,11 @@ export function Canvas() {
 
 	useEffect(() => {
 		frames.current = 0;
-		if (lvl.current === 1) {
+		if (lvl.current % 3 === 1) {
 			initLvl1(aliensRef);
-		} else if (lvl.current === 2) {
+		} else if (lvl.current % 3 === 2) {
 			initLvl2(aliensRef);
-		} else if (lvl.current === 3) {
+		} else if (lvl.current % 3 === 0) {
 			initLvl3(aliensRef);
 		}
 	}, [lvl.current]);
