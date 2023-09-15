@@ -3,6 +3,8 @@ import bug1 from '../images/bug/bug1.png';
 import bug2 from '../images/bug/bug2.png';
 import bug3 from '../images/bug/bug3.png';
 import bug4 from '../images/bug/bug4.png';
+import bug_boss1 from '../images/bug_boss/bug_boss1.png';
+import bug_boss2 from '../images/bug_boss/bug_boss2.png';
 import froggy1 from '../images/froggy/froggy1.png';
 import froggy2 from '../images/froggy/froggy2.png';
 import froggy3 from '../images/froggy/froggy3.png';
@@ -64,6 +66,8 @@ export default class Alien {
 
 		if (this.type === 'bug') {
 			this.frames = [bug1, bug2, bug3, bug4, bug3, bug2];
+		} else if (this.type === 'bug_boss') {
+			this.frames = [bug_boss1, bug_boss2, bug_boss1];
 		} else if (this.type === 'froggy') {
 			this.frames = [froggy1, froggy2, froggy3, froggy4, froggy3, froggy2];
 		} else if (this.type === 'froggy_boss') {
