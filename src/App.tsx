@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Game } from './components/Game/Game';
+import { Game } from './components/organisms';
 import { useInputStore } from './store/useInputStore';
 
 function App() {
