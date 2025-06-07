@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import { type PlayerType } from '../models';
+import { type PlayerType } from '@/models';
 
 import { useInputStore } from './useInputStore';
 
-import { constants } from '../config';
+import { constants } from '@/config';
 
 type PlayerStoreType = {
 	player: PlayerType;

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Game } from './components/organisms';
-import { useInputStore } from './store/useInputStore';
+import { Game } from '@/components/organisms';
+import { useInputStore } from '@/store/useInputStore';
 
 function App() {
 	const { setLeft, setRight, setFire } = useInputStore();

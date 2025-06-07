@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { extend } from '@pixi/react';
 import { AnimatedSprite, Texture, Assets } from 'pixi.js';
 
-import { type PlayerType } from '../../../models';
+import { type PlayerType } from '@/models';
 
 extend({ AnimatedSprite });
 

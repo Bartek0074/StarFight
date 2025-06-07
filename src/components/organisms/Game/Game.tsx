@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 import { Application, useTick, extend } from '@pixi/react';
 import { Container, Graphics } from 'pixi.js';
 
-import { PlayerSprite } from '../../molecules';
+import { PlayerSprite } from '@/components/molecules';
 
-import { usePlayerStore } from '../../../store';
+import { usePlayerStore } from '@/store';
 
-import { constants } from '../../../config/constants';
+import { constants } from '@/config/constants';
 
 extend({ Container, Graphics });
 
