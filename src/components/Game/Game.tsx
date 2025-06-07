@@ -1,8 +1,11 @@
 import { useCallback, useState, useEffect, useRef } from 'react';
+
 import { Application, useTick, extend } from '@pixi/react';
 import { Container, AnimatedSprite, Texture, Graphics, Assets } from 'pixi.js';
 
-import { usePlayerStore, type Player } from '../../store/usePlayerStore';
+import { usePlayerStore } from '../../store';
+
+import { type PlayerType } from '../../models';
 
 import { constants } from '../../config/constants';
 
@@ -20,7 +23,7 @@ const framePaths = [
 	// '/space_08.png',
 ];
 
-const Player = ({ player }: { player: Player }) => {
+const Player = ({ player }: { player: PlayerType }) => {
 	const [frames, setFrames] = useState<Texture[] | null>(null);
 	const spriteRef = useRef<AnimatedSprite>(null);
 

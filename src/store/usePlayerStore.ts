@@ -1,24 +1,16 @@
 import { create } from 'zustand';
+import { type PlayerType } from '../models';
+
 import { useInputStore } from './useInputStore';
+
 import { constants } from '../config';
 
-export type Player = {
-	width: number;
-	height: number;
-	x: number;
-	y: number;
-	dx: number;
-	dy: number;
-	speed: number;
-	rotation: number;
-};
-
-type PlayerStore = {
-	player: Player;
+type PlayerStoreType = {
+	player: PlayerType;
 	updatePlayer: () => void;
 };
 
-export const usePlayerStore = create<PlayerStore>((set, get) => ({
+export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 	player: {
 		width: constants.player.width,
 		height: constants.player.height,
