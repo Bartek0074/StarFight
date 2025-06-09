@@ -6,6 +6,7 @@ import { useInputStore } from './useInputStore';
 import { constants } from '@/config';
 import {
 	getPlayerDx,
+	getPlayerRotation,
 	getSwingY,
 	willBeOutOfLeftBounds,
 	willBeOutOfRightBounds,
@@ -59,17 +60,14 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 
 		x += dx;
 
-		if (left && !right && rotation >= constants.player.minRotation) {
-			rotation -= constants.player.rotationSpeed;
-		} else if (right && !left && rotation <= constants.player.maxRotation) {
-			rotation += constants.player.rotationSpeed;
-		} else if ((!left && !right) || (left && right)) {
-			if (rotation > 0) {
-				rotation -= constants.player.rotationSpeed;
-			} else if (rotation < 0) {
-				rotation += constants.player.rotationSpeed;
-			}
-		}
+		rotation = getPlayerRotation({
+			rotation: player.rotation,
+			left,
+			right,
+			minRotation: constants.player.minRotation,
+			maxRotation: constants.player.maxRotation,
+			rotationSpeed: constants.player.rotationSpeed,
+		});
 
 		const y = getSwingY({
 			baseY: baseY,
