@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useTick, extend } from '@pixi/react';
 import { Container, Graphics } from 'pixi.js';
 
-import { PlayerSprite } from '@/components/atoms';
+import { PlayerSprite,BulletSprite } from '@/components/atoms';
 
 import {
 	useBulletStore,
@@ -26,12 +26,12 @@ export const GameStage = () => {
 		if (fire) {
 			tryFire({ cooldown: 300 }) &&
 				addBullet({
-					x: player.x + player.width / 2 - 3,
+					x: player.x + player.width / 2 - 2,
 					y: player.y,
 					dy: -5,
 					dx: 0,
-					width: 6,
-					height: 6,
+					width: 4,
+					height: 8,
 					rotation: 0,
 				});
 		}
@@ -50,23 +50,13 @@ export const GameStage = () => {
 		g.fill();
 	}, []);
 
-	const drawBullets = useCallback(
-		(g: Graphics) => {
-			g.clear();
-			g.fill({ color: 0xff0000 });
-			bullets.forEach((bullet) => {
-				g.circle(bullet.x, bullet.y, bullet.width / 2);
-			});
-			g.fill();
-		},
-		[bullets]
-	);
-
 	return (
 		<pixiContainer>
 			<pixiGraphics draw={drawBackground} />
 			<PlayerSprite player={player} />
-			<pixiGraphics draw={drawBullets} />
+			{bullets.map((bullet) => (
+				<BulletSprite key={bullet.id} bullet={bullet} />
+			))}
 		</pixiContainer>
 	);
 };

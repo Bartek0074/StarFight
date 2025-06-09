@@ -32,5 +32,6 @@ export const constants = {
 			'/player/12.png',
 			'/player/13.png',
 		],
+		bulletPlayerOne: ['/bullet/player/one/1.png'],
 	},
 };

@@ -1,3 +1,4 @@
+import { BulletSprite } from './BulletSprite';
 import { PlayerSprite } from './PlayerSprite';
 
-export { PlayerSprite };
+export { BulletSprite, PlayerSprite };

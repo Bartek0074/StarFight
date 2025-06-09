@@ -14,6 +14,7 @@ extend({ Container, Text });
 
 const spriteGroups = {
 	player: constants.frames.player,
+	bulletPlayerOne: constants.frames.bulletPlayerOne,
 };
 
 export const Game = () => {
