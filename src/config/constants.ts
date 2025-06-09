@@ -6,10 +6,14 @@ export const constants = {
 	player: {
 		width: 50,
 		height: 60,
-		speed: 4,
-		rotation_speed: 1,
-		min_rotation: -5,
-		max_rotation: 5,
+		speed: 2.5,
+		rotationSpeed: 1,
+		minRotation: -5,
+		maxRotation: 5,
+		swingAmplitudeY: 4,
+		swingFrequencyY: 0.0025,
+		frictionFactor: 0.05,
+		accelerationFactor: 0.05,
 	},
 	frames: {
 		player: [
