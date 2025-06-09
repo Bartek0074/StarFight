@@ -41,7 +41,6 @@ export const GameStage = () => {
 		useFire();
 		updatePlayer();
 		updateBullets();
-		console.log(bullets.length)
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {

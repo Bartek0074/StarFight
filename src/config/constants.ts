@@ -2,6 +2,7 @@ export const constants = {
 	stage: {
 		width: 800,
 		height: 600,
+		bulletMargin: 100,
 	},
 	player: {
 		width: 50,

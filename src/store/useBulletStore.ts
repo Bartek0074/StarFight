@@ -54,26 +54,26 @@ export const useBulletStore = create<PlayerStoreType>((set, get) => ({
 					!willBeOutOfLeftBounds({
 						x: bullet.x + 20,
 						dx: bullet.dx,
-						margin: 100,
+						margin: constants.stage.bulletMargin,
 					}) &&
 					!willBeOutOfRightBounds({
 						x: bullet.x - 20,
 						dx: bullet.dx,
 						width: bullet.width,
 						stageWidth: constants.stage.width,
-						margin: 100,
+						margin: constants.stage.bulletMargin,
 					}) &&
 					!willBeOutOfTopBounds({
 						y: bullet.y + 20,
 						dy: bullet.dy,
-						margin: 100,
+						margin: constants.stage.bulletMargin,
 					}) &&
 					!willBeOutOfBottomBounds({
 						y: bullet.y - 20,
 						dy: bullet.dy,
 						height: bullet.height,
 						stageHeight: constants.stage.height,
-						margin: 100,
+						margin: constants.stage.bulletMargin,
 					})
 				);
 			});
