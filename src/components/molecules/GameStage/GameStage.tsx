@@ -26,12 +26,12 @@ export const GameStage = () => {
 		if (fire) {
 			tryFire({ cooldown: 300 }) &&
 				addBullet({
-					x: player.x + player.width / 2 - 4,
+					x: player.x + player.width / 2 - 3,
 					y: player.y,
 					dy: -5,
-					dx: -5,
-					width: 18,
-					height: 18,
+					dx: 0,
+					width: 6,
+					height: 6,
 					rotation: 0,
 				});
 		}

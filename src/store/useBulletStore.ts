@@ -2,7 +2,12 @@ import { create } from 'zustand';
 import type { BulletType } from '@/models';
 import type { AddBulletType } from '@/models/Bullet';
 
-import { willBeOutOfLeftBounds, willBeOutOfRightBounds } from '@/utils';
+import {
+	willBeOutOfBottomBounds,
+	willBeOutOfLeftBounds,
+	willBeOutOfRightBounds,
+	willBeOutOfTopBounds,
+} from '@/utils';
 import { constants } from '@/config';
 
 type PlayerStoreType = {
@@ -56,6 +61,18 @@ export const useBulletStore = create<PlayerStoreType>((set, get) => ({
 						dx: bullet.dx,
 						width: bullet.width,
 						stageWidth: constants.stage.width,
+						margin: 100,
+					}) &&
+					!willBeOutOfTopBounds({
+						y: bullet.y + 20,
+						dy: bullet.dy,
+						margin: 100,
+					}) &&
+					!willBeOutOfBottomBounds({
+						y: bullet.y - 20,
+						dy: bullet.dy,
+						height: bullet.height,
+						stageHeight: constants.stage.height,
 						margin: 100,
 					})
 				);
