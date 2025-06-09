@@ -1,3 +1,3 @@
-import { PlayerSprite } from './PlayerSprite';
+import { GameStage } from './GameStage';
 
-export { PlayerSprite };
+export { GameStage };

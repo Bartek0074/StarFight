@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { useTick, extend } from '@pixi/react';
 import { Container, Graphics } from 'pixi.js';
 
-import { PlayerSprite } from '@/components/molecules';
+import { PlayerSprite } from '@/components/atoms';
 
 import { usePlayerStore } from '@/store';
 

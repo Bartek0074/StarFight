@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Application, extend } from '@pixi/react';
 import { Container, Text, Assets, Texture } from 'pixi.js';
 
-import { GameStage } from '../GameStage';
+import { GameStage } from '@/components/molecules';
 
 import { useTextureStore } from '@/store';
 import { type SpriteKey } from '@/store/useTextureStore';
