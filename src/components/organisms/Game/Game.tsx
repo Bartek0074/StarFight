@@ -1,46 +1,57 @@
-import { useCallback } from 'react';
+import { useEffect } from 'react';
 
-import { Application, useTick, extend } from '@pixi/react';
-import { Container, Graphics } from 'pixi.js';
+import { Application, extend } from '@pixi/react';
+import { Container, Text, Assets, Texture } from 'pixi.js';
 
-import { PlayerSprite } from '@/components/molecules';
+import { GameStage } from '../GameStage';
 
-import { usePlayerStore } from '@/store';
+import { useTextureStore } from '@/store';
+import { type SpriteKey } from '@/store/useTextureStore';
 
 import { constants } from '@/config/constants';
 
-extend({ Container, Graphics });
+extend({ Container, Text });
 
-const GameStage = () => {
-	const { player, updatePlayer } = usePlayerStore();
-
-	useTick(() => {
-		updatePlayer();
-	});
-
-	const drawBackground = useCallback((g: Graphics) => {
-		g.clear();
-		g.fill({ color: 0x000000 });
-		g.rect(0, 0, constants.stage.width, constants.stage.height);
-		g.fill();
-	}, []);
-
-	return (
-		<pixiContainer>
-			<pixiGraphics draw={drawBackground} />
-			<PlayerSprite player={player} />
-		</pixiContainer>
-	);
+const spriteGroups = {
+	player: constants.frames.player,
 };
 
 export const Game = () => {
+	const { setTextures, isLoaded } = useTextureStore();
+
+	useEffect(() => {
+		const loadTextures = async () => {
+			for (const [key, paths] of Object.entries(spriteGroups)) {
+				await Assets.load(paths);
+				const textures = paths.map((path) => Texture.from(path));
+				setTextures(key as SpriteKey, [
+					...textures,
+					...textures.slice(0, -1).reverse(),
+				]);
+			}
+		};
+		loadTextures();
+	}, [setTextures]);
+
+	const allLoaded = Object.values(isLoaded).every((loaded) => loaded);
+
 	return (
 		<Application
 			width={constants.stage.width}
 			height={constants.stage.height}
 			backgroundColor={0x000000}
 		>
-			<GameStage />
+			{!allLoaded ? (
+				<pixiText
+					text='Loading...'
+					style={{ fill: 0xffffff, fontSize: 24 }}
+					x={constants.stage.width / 2}
+					y={constants.stage.height / 2}
+					anchor={0.5}
+				/>
+			) : (
+				<GameStage />
+			)}
 		</Application>
 	);
 };

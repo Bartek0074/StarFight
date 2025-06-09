@@ -1,5 +1,5 @@
-import { usePlayerStore } from './usePlayerStore';
 import { useInputStore } from './useInputStore';
+import { usePlayerStore } from './usePlayerStore';
+import { useTextureStore } from './useTextureStore';
 
-export { usePlayerStore };
-export { useInputStore };
+export { useInputStore, usePlayerStore, useTextureStore };
