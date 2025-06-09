@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import type { BulletType } from '@/models';
 import type { AddBulletType } from '@/models/Bullet';
 
+import { willBeOutOfLeftBounds, willBeOutOfRightBounds } from '@/utils';
+import { constants } from '@/config';
+
 type PlayerStoreType = {
 	bullets: BulletType[];
 	addBullet: (bullet: AddBulletType) => void;
@@ -34,17 +37,30 @@ export const useBulletStore = create<PlayerStoreType>((set, get) => ({
 
 	updateBullets: () => {
 		const { bullets } = get();
-		const updatedBullets = bullets.map((bullet) => {
-			let x = bullet.x + bullet.dx;
-			let y = bullet.y + bullet.dy;
 
-			return {
+		const visibleBullets = bullets
+			.map((bullet) => ({
 				...bullet,
-				x,
-				y,
-			};
-		});
+				x: bullet.x + bullet.dx,
+				y: bullet.y + bullet.dy,
+			}))
+			.filter((bullet) => {
+				return (
+					!willBeOutOfLeftBounds({
+						x: bullet.x + 20,
+						dx: bullet.dx,
+						margin: 100,
+					}) &&
+					!willBeOutOfRightBounds({
+						x: bullet.x - 20,
+						dx: bullet.dx,
+						width: bullet.width,
+						stageWidth: constants.stage.width,
+						margin: 100,
+					})
+				);
+			});
 
-		set({ bullets: updatedBullets });
+		set({ bullets: visibleBullets });
 	},
 }));

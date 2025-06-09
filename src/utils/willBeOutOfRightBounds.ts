@@ -3,6 +3,7 @@ type WillBeOutOfRightBoundsParams = {
 	dx: number;
 	width: number;
 	stageWidth: number;
+	margin?: number;
 };
 
 export const willBeOutOfRightBounds = ({
@@ -10,6 +11,7 @@ export const willBeOutOfRightBounds = ({
 	dx,
 	width,
 	stageWidth,
+	margin = 0,
 }: WillBeOutOfRightBoundsParams): boolean => {
-	return x + dx + width > stageWidth;
+	return x + dx + width > stageWidth + margin;
 };

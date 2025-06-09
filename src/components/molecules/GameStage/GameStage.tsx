@@ -29,9 +29,9 @@ export const GameStage = () => {
 					x: player.x + player.width / 2 - 4,
 					y: player.y,
 					dy: -5,
-					dx: 0,
-					width: 8,
-					height: 8,
+					dx: -5,
+					width: 18,
+					height: 18,
 					rotation: 0,
 				});
 		}
@@ -41,6 +41,7 @@ export const GameStage = () => {
 		useFire();
 		updatePlayer();
 		updateBullets();
+		console.log(bullets.length)
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {
