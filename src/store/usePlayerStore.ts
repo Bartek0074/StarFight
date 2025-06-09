@@ -4,7 +4,12 @@ import { type PlayerType } from '@/models';
 import { useInputStore } from './useInputStore';
 
 import { constants } from '@/config';
-import { getPlayerDx, getSwingY } from '@/utils';
+import {
+	getPlayerDx,
+	getSwingY,
+	willBeOutOfLeftBounds,
+	willBeOutOfRightBounds,
+} from '@/utils';
 
 type PlayerStoreType = {
 	player: PlayerType;
@@ -29,7 +34,7 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 		const { player } = get();
 		const { left, right } = useInputStore.getState();
 
-		let { dx, x, rotation } = player;
+		let { dx, x, width, rotation } = player;
 
 		dx = getPlayerDx({
 			dx,
@@ -40,7 +45,15 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 			frictionFactor: constants.player.frictionFactor,
 		});
 
-		if (x + dx < 0 || x + dx + player.width > constants.stage.width) {
+		if (
+			willBeOutOfLeftBounds({ x, dx }) ||
+			willBeOutOfRightBounds({
+				x,
+				dx,
+				width,
+				stageWidth: constants.stage.width,
+			})
+		) {
 			dx = 0;
 		}
 
