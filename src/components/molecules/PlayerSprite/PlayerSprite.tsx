@@ -8,15 +8,19 @@ import { type PlayerType } from '@/models';
 extend({ AnimatedSprite });
 
 const framePaths = [
-	'/space_00.png',
-	// '/space_01.png',
-	// '/space_02.png',
-	// '/space_03.png',
-	// '/space_04.png',
-	// '/space_05.png',
-	// '/space_06.png',
-	// '/space_07.png',
-	// '/space_08.png',
+	'/-1.png',
+	'/0.png',
+	'/1.png',
+	'/2.png',
+	'/3.png',
+	'/4.png',
+	'/5.png',
+	'/6.png',
+	'/7.png',
+	'/8.png',
+	'/9.png',
+	'/10.png',
+	'/11.png',
 ];
 
 export const PlayerSprite = ({ player }: { player: PlayerType }) => {
@@ -26,14 +30,14 @@ export const PlayerSprite = ({ player }: { player: PlayerType }) => {
 	useEffect(() => {
 		Assets.load(framePaths).then(() => {
 			const textures = framePaths.map((path) => Texture.from(path));
-			setFrames(textures);
+			setFrames([...textures, ...textures.slice(0, -1).reverse()]);
 		});
 	}, []);
 
 	useEffect(() => {
 		if (spriteRef.current) {
 			spriteRef.current.play();
-			spriteRef.current.animationSpeed = 0.1;
+			spriteRef.current.animationSpeed = 0.2;
 			spriteRef.current.loop = true;
 		}
 	}, [frames]);
