@@ -5,84 +5,82 @@ import { useInputStore } from './useInputStore';
 
 import { constants } from '@/config';
 import {
-	getPlayerDx,
-	getPlayerRotation,
-	getSwingY,
-	willBeOutOfLeftBounds,
-	willBeOutOfRightBounds,
+  getPlayerDx,
+  getPlayerRotation,
+  getSwingY,
+  willBeOutOfLeftBounds,
+  willBeOutOfRightBounds,
 } from '@/utils';
 
 type PlayerStoreType = {
-	player: PlayerType;
-	updatePlayer: () => void;
+  player: PlayerType;
+  updatePlayer: () => void;
 };
 
 const baseY = constants.stage.height - constants.player.height - 10;
 
 export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
-	player: {
-		width: constants.player.width,
-		height: constants.player.height,
-		x: constants.stage.width / 2 - constants.player.width / 2,
-		y: baseY,
-		dx: 0,
-		dy: 0,
-		speed: constants.player.speed,
-		rotation: 0,
-	},
+  player: {
+    width: constants.player.width,
+    height: constants.player.height,
+    x: (constants.stage.width - constants.player.width) / 2,
+    y: baseY,
+    dx: 0,
+    dy: 0,
+    speed: constants.player.speed,
+    rotation: 0,
+  },
 
-	updatePlayer: () => {
-		const { player } = get();
-		const { left, right } = useInputStore.getState();
+  updatePlayer: () => {
+    const { player } = get();
+    const { left, right } = useInputStore.getState();
 
-		let { dx, x, width, rotation } = player;
+    let dx = getPlayerDx({
+      dx: player.dx,
+      left,
+      right,
+      speed: player.speed,
+      accelerationFactor: constants.player.accelerationFactor,
+      frictionFactor: constants.player.frictionFactor,
+    });
 
-		dx = getPlayerDx({
-			dx,
-			left,
-			right,
-			speed: player.speed,
-			accelerationFactor: constants.player.accelerationFactor,
-			frictionFactor: constants.player.frictionFactor,
-		});
+    if (
+      willBeOutOfLeftBounds({ x: player.x, dx }) ||
+      willBeOutOfRightBounds({
+        x: player.x,
+        dx,
+        width: player.width,
+        stageWidth: constants.stage.width,
+      })
+    ) {
+      dx = 0;
+    }
 
-		if (
-			willBeOutOfLeftBounds({ x, dx }) ||
-			willBeOutOfRightBounds({
-				x,
-				dx,
-				width,
-				stageWidth: constants.stage.width,
-			})
-		) {
-			dx = 0;
-		}
+    const x = player.x + dx;
 
-		x += dx;
+    const rotation = getPlayerRotation({
+      rotation: player.rotation,
+      left,
+      right,
+      minRotation: constants.player.minRotation,
+      maxRotation: constants.player.maxRotation,
+      rotationSpeed: constants.player.rotationSpeed,
+    });
 
-		rotation = getPlayerRotation({
-			rotation: player.rotation,
-			left,
-			right,
-			minRotation: constants.player.minRotation,
-			maxRotation: constants.player.maxRotation,
-			rotationSpeed: constants.player.rotationSpeed,
-		});
+    const y = getSwingY({
+      baseY,
+      swingFrequency: constants.player.swingFrequencyY,
+      swingAmplitude: constants.player.swingAmplitudeY,
+    });
 
-		const y = getSwingY({
-			baseY: baseY,
-			swingFrequency: constants.player.swingFrequencyY,
-			swingAmplitude: constants.player.swingAmplitudeY,
-		});
-
-		set({
-			player: {
-				...player,
-				x,
-				dx,
-				rotation,
-				y,
-			},
-		});
-	},
+    set({
+      player: {
+        ...player,
+        x,
+        dx,
+        rotation,
+        y,
+      },
+    });
+  },
 }));
