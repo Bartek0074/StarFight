@@ -5,7 +5,12 @@ import { Container, Graphics } from 'pixi.js';
 
 import { PlayerSprite } from '@/components/atoms';
 
-import { useInputStore, useFireControlStore, usePlayerStore } from '@/store';
+import {
+	useBulletStore,
+	useInputStore,
+	useFireControlStore,
+	usePlayerStore,
+} from '@/store';
 
 import { constants } from '@/config/constants';
 
@@ -13,14 +18,29 @@ extend({ Container, Graphics });
 
 export const GameStage = () => {
 	const { player, updatePlayer } = usePlayerStore();
+	const { bullets, updateBullets, addBullet } = useBulletStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
-	useTick(() => {
-		updatePlayer();
+	const useFire = () =>{
 		if (fire) {
-			tryFire({ cooldown: 1000 }) && console.log('Firing!');
+			tryFire({ cooldown: 300 }) &&
+				addBullet({
+					x: player.x + player.width / 2 - 4,
+					y: player.y,
+					dy: -5,
+					dx: 0,
+					width: 8,
+					height: 8,
+					rotation: 0,
+				});
 		}
+	}
+
+	useTick(() => {
+		useFire();
+		updatePlayer();
+		updateBullets();
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {
@@ -30,10 +50,23 @@ export const GameStage = () => {
 		g.fill();
 	}, []);
 
+	const drawBullets = useCallback(
+		(g: Graphics) => {
+			g.clear();
+			g.fill({ color: 0xff0000 });
+			bullets.forEach((bullet) => {
+				g.circle(bullet.x, bullet.y, bullet.width / 2);
+			});
+			g.fill();
+		},
+		[bullets]
+	);
+
 	return (
 		<pixiContainer>
 			<pixiGraphics draw={drawBackground} />
 			<PlayerSprite player={player} />
+			<pixiGraphics draw={drawBullets} />
 		</pixiContainer>
 	);
 };
