@@ -52,6 +52,33 @@ export const constants = {
 		},
 	},
 
+	particles: {
+		hit: {
+			enemy: {
+				regular: {
+					minCount: 4,
+					maxCount: 12,
+					minRadius: 1,
+					maxRadius: 2.5,
+					minSpeed: 0.125,
+					maxSpeed: 2.5,
+				}
+			}
+		},
+		explosion: {
+			enemy: {
+				regular: {
+					minCount: 12,
+					maxCount: 36,
+					minRadius: 1.5,
+					maxRadius: 4,
+					minSpeed: 0.25,
+					maxSpeed: 3.75,
+				}
+			}
+		},
+	},
+
 	weapons: {
 		player: {
 			basic: {

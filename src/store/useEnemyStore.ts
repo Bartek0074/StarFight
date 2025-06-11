@@ -98,12 +98,12 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 				updatedEnemy.x + updatedEnemy.width / 2,
 				updatedEnemy.y + updatedEnemy.height / 2,
 				{
-					minCount: 100,
-					maxCount: 200,
-					minRadius: 2,
-					maxRadius: 5,
-					minSpeed: 1,
-					maxSpeed: 5,
+					minCount: constants.particles.explosion.enemy.regular.minCount,
+					maxCount: constants.particles.explosion.enemy.regular.maxCount,
+					minRadius: constants.particles.explosion.enemy.regular.minRadius,
+					maxRadius: constants.particles.explosion.enemy.regular.maxRadius,
+					minSpeed: constants.particles.explosion.enemy.regular.minSpeed,
+					maxSpeed: constants.particles.explosion.enemy.regular.maxSpeed,
 					colors: [0xff0000, 0xffa500, 0xffff00],
 				}
 			);
@@ -116,13 +116,13 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 				),
 			}));
 
-			makeExplosion(bullet.x + bullet.width/2, bullet.y + bullet.height / 2, {
-				minCount: 6,
-				maxCount: 12,
-				minRadius: 1,
-				maxRadius: 3,
-				minSpeed: 0.5,
-				maxSpeed: 2,
+			makeExplosion(bullet.x + bullet.width / 2, bullet.y + bullet.height / 2, {
+				minCount: constants.particles.hit.enemy.regular.minCount,
+				maxCount: constants.particles.hit.enemy.regular.maxCount,
+				minRadius: constants.particles.hit.enemy.regular.minRadius,
+				maxRadius: constants.particles.hit.enemy.regular.maxRadius,
+				minSpeed: constants.particles.hit.enemy.regular.minSpeed,
+				maxSpeed: constants.particles.hit.enemy.regular.maxSpeed,
 				colors: [0xff0000, 0xffa500, 0xffff00],
 			});
 
