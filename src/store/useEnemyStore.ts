@@ -1,27 +1,30 @@
 import { create } from 'zustand';
 import type { EnemyType } from '@/models';
 import type { AddEnemyType } from '@/models';
-import type { AddBulletType } from '@/models';
 import { constants } from '@/config';
 
 type EnemyStoreType = {
 	enemies: EnemyType[];
-	addEnemy: (enemy: AddBulletType) => void;
+	addEnemy: (enemy: AddEnemyType) => void;
 	removeEnemy: (id: number) => void;
 	updateEnemies: () => void;
+	hitEnemy: (id: number, damage: number) => void;
 };
 
 export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
-	enemies: [{
-		id: 0,
-		width: constants.enemy.regular.width,
-		height: constants.enemy.regular.height,
-		x: 100,
-		y: 100,
-		dx: 0,
-		dy: 0,
-		rotation: 0,
-	}],
+	enemies: [
+		{
+			id: 0,
+			width: constants.enemy.regular.width,
+			height: constants.enemy.regular.height,
+			x: 100,
+			y: 100,
+			dx: 0,
+			dy: 0,
+			rotation: 0,
+			health: 12,
+		},
+	],
 
 	addEnemy: (enemy: AddEnemyType) => {
 		const enemies = get().enemies;
@@ -55,5 +58,26 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 		set(() => ({
 			enemies: updatedEnemies,
 		}));
+	},
+
+	hitEnemy: (id: number, damage: number) => {
+		const { enemies, removeEnemy } = get();
+		const enemy = enemies.find((e) => e.id === id);
+
+		if (!enemy) return;
+
+		const updatedEnemy = { ...enemy, health: enemy.health - damage };
+
+		console.log(updatedEnemy.health)
+
+		if (updatedEnemy.health <= 0) {
+			// sound of enemy death can be played here
+			removeEnemy(id);
+		} else {
+			// sound of enemy hit can be played here
+			set((state) => ({
+				enemies: state.enemies.map((e) => (e.id === id ? updatedEnemy : e)),
+			}));
+		}
 	},
 }));

@@ -7,6 +7,7 @@ export type BulletType = {
 	dx: number;
 	dy: number;
 	rotation: number;
+	damage: number;
 };
 
 export type AddBulletType = {
@@ -17,4 +18,5 @@ export type AddBulletType = {
 	dx: number;
 	dy: number;
 	rotation: number;
+	damage: number;
 }

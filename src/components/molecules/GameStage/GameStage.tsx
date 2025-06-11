@@ -22,11 +22,12 @@ extend({ Container, Graphics });
 export const GameStage = () => {
 	const { player, updatePlayer, playerShoot } = usePlayerStore();
 	const { playerBullets } = useBulletStore();
-	const { enemies, removeEnemy, updateEnemies } = useEnemyStore();
+	const { enemies, hitEnemy, updateEnemies } = useEnemyStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
-	const { checkPlayerBulletsVsEnemiesCollisions } = usePlayerBulletsVsEnemiesCollision();
+	const { checkPlayerBulletsVsEnemiesCollisions } =
+		usePlayerBulletsVsEnemiesCollision();
 
 	const handlePlayerFire = () => {
 		if (fire && tryFire({ cooldown: player.cooldown })) {
@@ -45,7 +46,7 @@ export const GameStage = () => {
 			enemies: enemies,
 			onCollision: (bullet, enemy) => {
 				playerBullets.remove(bullet.id);
-				removeEnemy(enemy.id);
+				hitEnemy(enemy.id, bullet.damage);
 			},
 		});
 	});

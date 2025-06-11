@@ -18,7 +18,7 @@ import {
 type PlayerStoreType = {
 	player: PlayerType;
 	updatePlayer: () => void;
-  playerShoot: () => void;
+	playerShoot: () => void;
 };
 
 const baseY = constants.stage.height - constants.player.height - 10;
@@ -33,7 +33,8 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 		dy: 0,
 		speed: constants.player.speed,
 		rotation: 0,
-    cooldown: 100,
+		cooldown: 100,
+		health: 24
 	},
 
 	updatePlayer: () => {
@@ -101,8 +102,9 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 			width: 4,
 			height: 8,
 			rotation: 0,
+			damage: 4,
 		});
-    
+
 		sound.play('bulletOneShot');
 	},
 }));

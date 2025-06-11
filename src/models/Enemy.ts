@@ -7,6 +7,7 @@ export type EnemyType = {
 	dx: number;
 	dy: number;
 	rotation: number;
+	health: number;
 };
 
 export type AddEnemyType = {
@@ -17,4 +18,5 @@ export type AddEnemyType = {
 	dx: number;
 	dy: number;
 	rotation: number;
+	health: number;
 }
