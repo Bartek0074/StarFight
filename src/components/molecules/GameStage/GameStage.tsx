@@ -2,7 +2,6 @@ import { useCallback } from 'react';
 
 import { Container, Graphics } from 'pixi.js';
 import { useTick, extend } from '@pixi/react';
-import { sound } from '@pixi/sound';
 
 import { PlayerSprite, BulletSprite } from '@/components/atoms';
 
@@ -18,30 +17,19 @@ import { constants } from '@/config/constants';
 extend({ Container, Graphics });
 
 export const GameStage = () => {
-	const { player, updatePlayer } = usePlayerStore();
+	const { player, updatePlayer, playerShoot } = usePlayerStore();
 	const { playerBullets } = useBulletStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
-	const useFire = () => {
-		if (fire) {
-			if (tryFire({ cooldown: 100 })) {
-				playerBullets.add({
-					x: player.x + player.width / 2 - 2,
-					y: player.y,
-					dy: -5,
-					dx: 0,
-					width: 4,
-					height: 8,
-					rotation: 0,
-				});
-				sound.play('bulletOneShot');
-			}
+	const handlePlayerFire = () => {
+		if (fire && tryFire({ cooldown: player.cooldown })) {
+			playerShoot();
 		}
 	};
 
 	useTick(() => {
-		useFire();
+		handlePlayerFire();
 		updatePlayer();
 		playerBullets.update();
 	});

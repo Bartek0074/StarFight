@@ -7,4 +7,5 @@ export type PlayerType = {
 	dy: number;
 	speed: number;
 	rotation: number;
+	cooldown: number;
 };
