@@ -63,5 +63,8 @@ export const constants = {
 
 	sounds: {
 		weaponPlayerBasicShot: '/sounds/weapons/player/basic/shot.mp3',
+		weaponPlayerBasicHit: '/sounds/weapons/player/basic/hit.mp3',
+
+		enemyExplosion: '/sounds/enemy/explosion.mp3',
 	},
 };

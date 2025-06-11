@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { EnemyType } from '@/models';
 import type { AddEnemyType } from '@/models';
 import { constants } from '@/config';
+import { sound } from '@pixi/sound';
 
 type EnemyStoreType = {
 	enemies: EnemyType[];
@@ -69,13 +70,15 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 		const updatedEnemy = { ...enemy, health: enemy.health - damage };
 
 		if (updatedEnemy.health <= 0) {
-			// sound of enemy death can be played here
 			removeEnemy(id);
+
+			sound.play('enemyExplosion');
 		} else {
-			// sound of enemy hit can be played here
 			set((state) => ({
 				enemies: state.enemies.map((e) => (e.id === id ? updatedEnemy : e)),
 			}));
+
+			sound.play('weaponPlayerBasicHit');
 		}
 	},
 }));
