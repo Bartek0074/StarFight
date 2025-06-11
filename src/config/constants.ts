@@ -16,16 +16,20 @@ export const constants = {
 		frictionFactor: 0.05,
 		accelerationFactor: 0.05,
 	},
-	enemy: {
-		regular: {
-			width: 50,
-			height: 50,
-			speed: 2.5,
-		},
-		boss: {
-			width: 100,
-			height: 100,
-			speed: 1.5,
+	enemies: {
+		bug: {
+			regular: {
+				width: 50,
+				height: 50,
+				speed: 2.5,
+				health: 12,
+			},
+			boss: {
+				width: 100,
+				height: 100,
+				speed: 1.5,
+				health: 50,
+			},
 		},
 	},
 	sounds: {

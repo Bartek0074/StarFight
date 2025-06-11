@@ -15,14 +15,14 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 	enemies: [
 		{
 			id: 0,
-			width: constants.enemy.regular.width,
-			height: constants.enemy.regular.height,
+			width: constants.enemies.bug.regular.width,
+			height: constants.enemies.bug.regular.height,
 			x: 100,
 			y: 100,
 			dx: 0,
 			dy: 0,
 			rotation: 0,
-			health: 12,
+			health: constants.enemies.bug.regular.health,
 		},
 	],
 
