@@ -1,3 +1,4 @@
+import { areRectanglesColliding } from './areRectanglesColliding';
 import { getPlayerDx } from './getPlayerDx';
 import { getPlayerRotation } from './getPlayerRotation';
 import { getSwingY } from './getSwingY';
@@ -7,6 +8,7 @@ import { willBeOutOfRightBounds } from './willBeOutOfRightBounds';
 import { willBeOutOfTopBounds } from './willBeOutOfTopBounds';
 
 export {
+	areRectanglesColliding,
 	getPlayerDx,
 	getPlayerRotation,
 	getSwingY,

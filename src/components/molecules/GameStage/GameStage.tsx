@@ -15,12 +15,14 @@ import {
 
 import { constants } from '@/config/constants';
 
+import { areRectanglesColliding } from '@/utils';
+
 extend({ Container, Graphics });
 
 export const GameStage = () => {
 	const { player, updatePlayer, playerShoot } = usePlayerStore();
 	const { playerBullets } = useBulletStore();
-	const { enemies, updateEnemies } = useEnemyStore();
+	const { enemies, removeEnemy, updateEnemies } = useEnemyStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
@@ -35,6 +37,31 @@ export const GameStage = () => {
 		updatePlayer();
 		updateEnemies();
 		playerBullets.update();
+
+		for (const bullet of playerBullets.bullets) {
+			for (const enemy of enemies) {
+				if (
+					areRectanglesColliding({
+						a: {
+							x: bullet.x,
+							y: bullet.y,
+							width: bullet.width,
+							height: bullet.height,
+						},
+						b: {
+							x: enemy.x,
+							y: enemy.y,
+							width: enemy.width,
+							height: enemy.height,
+						},
+						// margin: 10
+					})
+				) {
+					playerBullets.remove(bullet.id);
+					removeEnemy(enemy.id);
+				}
+			}
+		}
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {
