@@ -14,8 +14,8 @@ import { constants } from '@/config/constants';
 extend({ Container, Text });
 
 const spriteGroups = {
-	player: constants.frames.player,
-	bulletPlayerOne: constants.frames.bulletPlayerOne,
+	player: constants.player.frames,
+	bulletPlayerOne: constants.weapons.player.basic.frames,
 };
 
 export const Game = () => {

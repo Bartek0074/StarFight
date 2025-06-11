@@ -68,8 +68,6 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 
 		const updatedEnemy = { ...enemy, health: enemy.health - damage };
 
-		console.log(updatedEnemy.health)
-
 		if (updatedEnemy.health <= 0) {
 			// sound of enemy death can be played here
 			removeEnemy(id);

@@ -105,6 +105,6 @@ export const usePlayerStore = create<PlayerStoreType>((set, get) => ({
 			damage: 4,
 		});
 
-		sound.play('bulletOneShot');
+		sound.play('weaponPlayerBasicShot');
 	},
 }));

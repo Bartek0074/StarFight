@@ -15,28 +15,7 @@ export const constants = {
 		swingFrequencyY: 0.0025,
 		frictionFactor: 0.05,
 		accelerationFactor: 0.05,
-	},
-	enemies: {
-		bug: {
-			regular: {
-				width: 50,
-				height: 50,
-				speed: 2.5,
-				health: 12,
-			},
-			boss: {
-				width: 100,
-				height: 100,
-				speed: 1.5,
-				health: 50,
-			},
-		},
-	},
-	sounds: {
-		bulletOneShot: '/sounds/bullet/one/shot.mp3',
-	},
-	frames: {
-		player: [
+		frames: [
 			'/images/player/1.png',
 			'/images/player/2.png',
 			'/images/player/3.png',
@@ -51,14 +30,38 @@ export const constants = {
 			'/images/player/12.png',
 			'/images/player/13.png',
 		],
-		enemy: {
+	},
+	enemies: {
+		bug: {
 			regular: {
-				bug: [
+				width: 50,
+				height: 50,
+				speed: 2.5,
+				health: 12,
+				frames: [
 					'/images/enemy/regular/bug/1.png',
 					'/images/enemy/regular/bug/2.png',
 				],
 			},
+			boss: {
+				width: 100,
+				height: 100,
+				speed: 1.5,
+				health: 50,
+			},
 		},
-		bulletPlayerOne: ['/images/bullet/player/one/1.png'],
+	},
+
+	weapons: {
+		player: {
+			basic: {
+				damage: 2,
+				frames: ['/images/weapons/player/basic/1.png'],
+			},
+		},
+	},
+
+	sounds: {
+		weaponPlayerBasicShot: '/sounds/weapons/player/basic/shot.mp3',
 	},
 };
