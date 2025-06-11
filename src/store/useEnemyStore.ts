@@ -1,6 +1,8 @@
 import { create } from 'zustand';
+import { useParticleStore } from './useParticleStore';
 import type { EnemyType } from '@/models';
 import type { AddEnemyType } from '@/models';
+import { type BulletType } from '@/models';
 import { constants } from '@/config';
 import { sound } from '@pixi/sound';
 
@@ -9,7 +11,7 @@ type EnemyStoreType = {
 	addEnemy: (enemy: AddEnemyType) => void;
 	removeEnemy: (id: number) => void;
 	updateEnemies: () => void;
-	hitEnemy: (id: number, damage: number) => void;
+	hitEnemy: (enemy: EnemyType, bullet: BulletType) => void;
 };
 
 export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
@@ -19,6 +21,28 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 			width: constants.enemies.bug.regular.width,
 			height: constants.enemies.bug.regular.height,
 			x: 100,
+			y: 100,
+			dx: 0,
+			dy: 0,
+			rotation: 0,
+			health: constants.enemies.bug.regular.health,
+		},
+		{
+			id: 1,
+			width: constants.enemies.bug.regular.width,
+			height: constants.enemies.bug.regular.height,
+			x: 220,
+			y: 100,
+			dx: 0,
+			dy: 0,
+			rotation: 0,
+			health: constants.enemies.bug.regular.health,
+		},
+		{
+			id: 2,
+			width: constants.enemies.bug.regular.width,
+			height: constants.enemies.bug.regular.height,
+			x: 160,
 			y: 100,
 			dx: 0,
 			dy: 0,
@@ -61,22 +85,46 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 		}));
 	},
 
-	hitEnemy: (id: number, damage: number) => {
-		const { enemies, removeEnemy } = get();
-		const enemy = enemies.find((e) => e.id === id);
+	hitEnemy: (enemy: EnemyType, bullet: BulletType) => {
+		const { removeEnemy } = get();
+		const { makeExplosion } = useParticleStore.getState();
 
-		if (!enemy) return;
-
-		const updatedEnemy = { ...enemy, health: enemy.health - damage };
+		const updatedEnemy = { ...enemy, health: enemy.health - bullet.damage };
 
 		if (updatedEnemy.health <= 0) {
-			removeEnemy(id);
+			removeEnemy(enemy.id);
+
+			makeExplosion(
+				updatedEnemy.x + updatedEnemy.width / 2,
+				updatedEnemy.y + updatedEnemy.height / 2,
+				{
+					minCount: 100,
+					maxCount: 200,
+					minRadius: 2,
+					maxRadius: 5,
+					minSpeed: 1,
+					maxSpeed: 5,
+					colors: [0xff0000, 0xffa500, 0xffff00],
+				}
+			);
 
 			sound.play('enemyExplosion');
 		} else {
 			set((state) => ({
-				enemies: state.enemies.map((e) => (e.id === id ? updatedEnemy : e)),
+				enemies: state.enemies.map((e) =>
+					e.id === enemy.id ? updatedEnemy : e
+				),
 			}));
+
+			makeExplosion(bullet.x + bullet.width/2, bullet.y + bullet.height / 2, {
+				minCount: 6,
+				maxCount: 12,
+				minRadius: 1,
+				maxRadius: 3,
+				minSpeed: 0.5,
+				maxSpeed: 2,
+				colors: [0xff0000, 0xffa500, 0xffff00],
+			});
 
 			sound.play('weaponPlayerBasicHit');
 		}

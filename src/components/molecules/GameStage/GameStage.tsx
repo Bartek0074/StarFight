@@ -10,6 +10,7 @@ import {
 	useEnemyStore,
 	useFireControlStore,
 	useInputStore,
+	useParticleStore,
 	usePlayerStore,
 } from '@/store';
 
@@ -25,6 +26,7 @@ export const GameStage = () => {
 	const { enemies, hitEnemy, updateEnemies } = useEnemyStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
+	const { particles, updateParticles } = useParticleStore();
 
 	const { checkPlayerBulletsVsEnemiesCollisions } =
 		usePlayerBulletsVsEnemiesCollision();
@@ -40,13 +42,14 @@ export const GameStage = () => {
 		updatePlayer();
 		updateEnemies();
 		playerBullets.update();
+		updateParticles();
 
 		checkPlayerBulletsVsEnemiesCollisions({
 			bullets: playerBullets.bullets,
 			enemies: enemies,
 			onCollision: (bullet, enemy) => {
 				playerBullets.remove(bullet.id);
-				hitEnemy(enemy.id, bullet.damage);
+				hitEnemy(enemy, bullet);
 			},
 		});
 	});
@@ -67,6 +70,17 @@ export const GameStage = () => {
 			))}
 			{enemies.map((enemy) => (
 				<EnemySprite key={enemy.id} enemy={enemy} />
+			))}
+			{particles.map((particle, index) => (
+				<pixiGraphics
+					key={index}
+					draw={(g) => {
+						g.clear();
+						g.fill({ color: particle.color });
+						g.circle(particle.x, particle.y, particle.radius);
+						g.fill();
+					}}
+				/>
 			))}
 		</pixiContainer>
 	);
