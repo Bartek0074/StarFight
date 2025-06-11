@@ -13,9 +13,9 @@ import {
 	usePlayerStore,
 } from '@/store';
 
-import { constants } from '@/config/constants';
+import { usePlayerBulletsVsEnemiesCollision } from '@/hooks';
 
-import { areRectanglesColliding } from '@/utils';
+import { constants } from '@/config/constants';
 
 extend({ Container, Graphics });
 
@@ -25,6 +25,8 @@ export const GameStage = () => {
 	const { enemies, removeEnemy, updateEnemies } = useEnemyStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
+
+	const { checkPlayerBulletsVsEnemiesCollisions } = usePlayerBulletsVsEnemiesCollision();
 
 	const handlePlayerFire = () => {
 		if (fire && tryFire({ cooldown: player.cooldown })) {
@@ -38,30 +40,14 @@ export const GameStage = () => {
 		updateEnemies();
 		playerBullets.update();
 
-		for (const bullet of playerBullets.bullets) {
-			for (const enemy of enemies) {
-				if (
-					areRectanglesColliding({
-						a: {
-							x: bullet.x,
-							y: bullet.y,
-							width: bullet.width,
-							height: bullet.height,
-						},
-						b: {
-							x: enemy.x,
-							y: enemy.y,
-							width: enemy.width,
-							height: enemy.height,
-						},
-						// margin: 10
-					})
-				) {
-					playerBullets.remove(bullet.id);
-					removeEnemy(enemy.id);
-				}
-			}
-		}
+		checkPlayerBulletsVsEnemiesCollisions({
+			bullets: playerBullets.bullets,
+			enemies: enemies,
+			onCollision: (bullet, enemy) => {
+				playerBullets.remove(bullet.id);
+				removeEnemy(enemy.id);
+			},
+		});
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {
