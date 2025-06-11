@@ -7,8 +7,9 @@ import { PlayerSprite, BulletSprite } from '@/components/atoms';
 
 import {
 	useBulletStore,
-	useInputStore,
+	useEnemyStore,
 	useFireControlStore,
+	useInputStore,
 	usePlayerStore,
 } from '@/store';
 
@@ -19,6 +20,7 @@ extend({ Container, Graphics });
 export const GameStage = () => {
 	const { player, updatePlayer, playerShoot } = usePlayerStore();
 	const { playerBullets } = useBulletStore();
+	const { enemies, updateEnemies } = useEnemyStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
@@ -31,6 +33,7 @@ export const GameStage = () => {
 	useTick(() => {
 		handlePlayerFire();
 		updatePlayer();
+		updateEnemies();
 		playerBullets.update();
 	});
 
@@ -47,6 +50,21 @@ export const GameStage = () => {
 			<PlayerSprite player={player} />
 			{playerBullets.bullets.map((bullet) => (
 				<BulletSprite key={bullet.id} bullet={bullet} />
+			))}
+			{enemies.map((enemy) => (
+				<pixiGraphics
+					key={enemy.id}
+					x={enemy.x}
+					y={enemy.y}
+					width={enemy.width}
+					height={enemy.height}
+					draw={(g) => {
+						g.clear();
+						g.fill(0xff0000);
+						g.rect(0, 0, enemy.width, enemy.height);
+						g.fill();
+					}}
+				/>
 			))}
 		</pixiContainer>
 	);
