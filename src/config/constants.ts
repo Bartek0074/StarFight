@@ -16,6 +16,18 @@ export const constants = {
 		frictionFactor: 0.05,
 		accelerationFactor: 0.05,
 	},
+	enemy: {
+		regular: {
+			width: 50,
+			height: 50,
+			speed: 2.5,
+		},
+		boss: {
+			width: 100,
+			height: 100,
+			speed: 1.5,
+		},
+	},
 	sounds: {
 		bulletOneShot: '/sounds/bullet/one/shot.mp3',
 	},
@@ -35,6 +47,14 @@ export const constants = {
 			'/images/player/12.png',
 			'/images/player/13.png',
 		],
+		enemy: {
+			regular: {
+				bug: [
+					'/images/enemy/regular/bug/1.png',
+					'/images/enemy/regular/bug/2.png',
+				],
+			},
+		},
 		bulletPlayerOne: ['/images/bullet/player/one/1.png'],
 	},
 };

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { EnemyType } from '@/models';
 import type { AddEnemyType } from '@/models';
 import type { AddBulletType } from '@/models';
+import { constants } from '@/config';
 
 type EnemyStoreType = {
 	enemies: EnemyType[];
@@ -13,8 +14,8 @@ type EnemyStoreType = {
 export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 	enemies: [{
 		id: 0,
-		width: 50,
-		height: 50,
+		width: constants.enemy.regular.width,
+		height: constants.enemy.regular.height,
 		x: 0,
 		y: 0,
 		dx: 1,
