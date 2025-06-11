@@ -19,14 +19,14 @@ extend({ Container, Graphics });
 
 export const GameStage = () => {
 	const { player, updatePlayer } = usePlayerStore();
-	const { bullets, updateBullets, addBullet } = useBulletStore();
+	const { playerBullets } = useBulletStore();
 	const { fire } = useInputStore();
 	const { tryFire } = useFireControlStore();
 
 	const useFire = () => {
 		if (fire) {
 			if (tryFire({ cooldown: 100 })) {
-				addBullet({
+				playerBullets.add({
 					x: player.x + player.width / 2 - 2,
 					y: player.y,
 					dy: -5,
@@ -43,7 +43,7 @@ export const GameStage = () => {
 	useTick(() => {
 		useFire();
 		updatePlayer();
-		updateBullets();
+		playerBullets.update();
 	});
 
 	const drawBackground = useCallback((g: Graphics) => {
@@ -57,7 +57,7 @@ export const GameStage = () => {
 		<pixiContainer>
 			<pixiGraphics draw={drawBackground} />
 			<PlayerSprite player={player} />
-			{bullets.map((bullet) => (
+			{playerBullets.bullets.map((bullet) => (
 				<BulletSprite key={bullet.id} bullet={bullet} />
 			))}
 		</pixiContainer>

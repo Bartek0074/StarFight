@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { BulletType } from '@/models';
-import type { AddBulletType } from '@/models/Bullet';
+import type { AddBulletType } from '@/models';
 
 import {
 	willBeOutOfBottomBounds,
@@ -10,74 +10,93 @@ import {
 } from '@/utils';
 import { constants } from '@/config';
 
-type PlayerStoreType = {
+type BulletOwner = 'playerBullets' | 'enemyBullets';
+
+type BulletSliceType = {
 	bullets: BulletType[];
-	addBullet: (bullet: AddBulletType) => void;
-	removeBullet: (id: number) => void;
-	updateBullets: () => void;
+	add: (bullet: AddBulletType) => void;
+	remove: (id: number) => void;
+	update: () => void;
 };
 
-export const useBulletStore = create<PlayerStoreType>((set, get) => ({
+type BulletStoreType = {
+	playerBullets: BulletSliceType;
+	enemyBullets: BulletSliceType;
+};
+
+const createBulletSlice = (
+	owner: BulletOwner,
+	set: (fn: (state: BulletStoreType) => Partial<BulletStoreType>) => void,
+	get: () => BulletStoreType
+): BulletSliceType => ({
 	bullets: [],
 
-	addBullet: (bullet: AddBulletType) => {
-		const lastAddedId =
-			get().bullets.length > 0 ? get().bullets[get().bullets.length - 1].id : 0;
+	add: (bullet) => {
+		const bullets = get()[owner].bullets;
+		const lastId = bullets.length > 0 ? bullets[bullets.length - 1].id : 0;
 
 		const newBullet: BulletType = {
 			...bullet,
-			id: lastAddedId + 1,
+			id: lastId + 1,
 		};
 
 		set((state) => ({
-			bullets: [...state.bullets, newBullet],
+			[owner]: {
+				...state[owner],
+				bullets: [...state[owner].bullets, newBullet],
+			},
 		}));
 	},
 
-	removeBullet: (id: number) => {
+	remove: (id: number) => {
 		set((state) => ({
-			bullets: state.bullets.filter((bullet) => bullet.id !== id),
+			[owner]: {
+				...state[owner],
+				bullets: state[owner].bullets.filter((b) => b.id !== id),
+			},
 		}));
 	},
 
-	updateBullets: () => {
-		const { bullets } = get();
+	update: () => {
+		const { bullets } = get()[owner];
 
-		const visibleBullets = bullets
-			.map((bullet) => ({
-				...bullet,
-				x: bullet.x + bullet.dx,
-				y: bullet.y + bullet.dy,
+		const updated = bullets
+			.map((b) => ({
+				...b,
+				x: b.x + b.dx,
+				y: b.y + b.dy,
 			}))
-			.filter((bullet) => {
+			.filter((b) => {
 				return (
-					!willBeOutOfLeftBounds({
-						x: bullet.x + 20,
-						dx: bullet.dx,
-						margin: constants.stage.bulletMargin,
-					}) &&
+					!willBeOutOfLeftBounds({ x: b.x + 20, dx: b.dx, margin: constants.stage.bulletMargin }) &&
 					!willBeOutOfRightBounds({
-						x: bullet.x - 20,
-						dx: bullet.dx,
-						width: bullet.width,
+						x: b.x - 20,
+						dx: b.dx,
+						width: b.width,
 						stageWidth: constants.stage.width,
 						margin: constants.stage.bulletMargin,
 					}) &&
-					!willBeOutOfTopBounds({
-						y: bullet.y + 20,
-						dy: bullet.dy,
-						margin: constants.stage.bulletMargin,
-					}) &&
+					!willBeOutOfTopBounds({ y: b.y + 20, dy: b.dy, margin: constants.stage.bulletMargin }) &&
 					!willBeOutOfBottomBounds({
-						y: bullet.y - 20,
-						dy: bullet.dy,
-						height: bullet.height,
+						y: b.y - 20,
+						dy: b.dy,
+						height: b.height,
 						stageHeight: constants.stage.height,
 						margin: constants.stage.bulletMargin,
 					})
 				);
 			});
 
-		set({ bullets: visibleBullets });
+		set((state) => ({
+			[owner]: {
+				...state[owner],
+				bullets: updated,
+			},
+		}));
 	},
+});
+
+export const useBulletStore = create<BulletStoreType>((set, get) => ({
+	playerBullets: createBulletSlice('playerBullets', set, get),
+	enemyBullets: createBulletSlice('enemyBullets', set, get),
 }));
