@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { Container, Graphics } from 'pixi.js';
 import { useTick, extend } from '@pixi/react';
 
-import { PlayerSprite, BulletSprite } from '@/components/atoms';
+import { PlayerSprite, EnemySprite, BulletSprite } from '@/components/atoms';
 
 import {
 	useBulletStore,
@@ -52,19 +52,7 @@ export const GameStage = () => {
 				<BulletSprite key={bullet.id} bullet={bullet} />
 			))}
 			{enemies.map((enemy) => (
-				<pixiGraphics
-					key={enemy.id}
-					x={enemy.x}
-					y={enemy.y}
-					width={enemy.width}
-					height={enemy.height}
-					draw={(g) => {
-						g.clear();
-						g.fill(0xff0000);
-						g.rect(0, 0, enemy.width, enemy.height);
-						g.fill();
-					}}
-				/>
+				<EnemySprite key={enemy.id} enemy={enemy} />
 			))}
 		</pixiContainer>
 	);

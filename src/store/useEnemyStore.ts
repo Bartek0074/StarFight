@@ -15,10 +15,11 @@ export const useEnemyStore = create<EnemyStoreType>((set, get) => ({
 		id: 0,
 		width: 50,
 		height: 50,
-		x: 100,
-		y: 100,
+		x: 0,
+		y: 0,
 		dx: 1,
 		dy: 1,
+		rotation: 0,
 	}],
 
 	addEnemy: (enemy: AddEnemyType) => {

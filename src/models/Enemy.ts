@@ -6,6 +6,7 @@ export type EnemyType = {
 	y: number;
 	dx: number;
 	dy: number;
+	rotation: number;
 };
 
 export type AddEnemyType = {
@@ -15,4 +16,5 @@ export type AddEnemyType = {
 	y: number;
 	dx: number;
 	dy: number;
+	rotation: number;
 }
