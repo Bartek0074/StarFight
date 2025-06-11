@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import type { ParticleType } from '@/models';
+import { constants } from '@/config';
 
 type ParticleStoreType = {
 	particles: ParticleType[];
@@ -36,10 +37,10 @@ export const useParticleStore = create<ParticleStoreType>((set, get) => ({
 				...p,
 				x: p.x + p.dx,
 				y: p.y + p.dy,
-				dx: p.dx * 0.97,
-				dy: p.dy * 0.97,
-				radius: p.radius * 0.98,
-				opacity: p.opacity * 0.96,
+				dx: p.dx * constants.particles.speedFactor,
+				dy: p.dy * constants.particles.speedFactor,
+				radius: p.radius * constants.particles.radiusFactor,
+				opacity: p.opacity  * constants.particles.opacityFactor,
 			}))
 			.filter((p) => p.opacity > 0.01);
 

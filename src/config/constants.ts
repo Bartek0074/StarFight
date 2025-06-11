@@ -53,6 +53,9 @@ export const constants = {
 	},
 
 	particles: {
+		opacityFactor: 0.96,
+		speedFactor: 0.97,
+		radiusFactor: 0.98,
 		hit: {
 			enemy: {
 				regular: {
