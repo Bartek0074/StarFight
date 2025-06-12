@@ -20,7 +20,6 @@ export const usePlayerBulletsVsEnemiesCollision = () => {
 					areRectanglesColliding({
 						a: bullet,
 						b: enemy,
-						margin: 10,
 					})
 				) {
 					onCollision(bullet, enemy);
