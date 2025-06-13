@@ -39,8 +39,8 @@ export const constants = {
 				speed: 2.5,
 				health: 12,
 				frames: [
-					'/images/enemy/regular/bug/1.png',
-					'/images/enemy/regular/bug/2.png',
+					'/images/enemy/bug/regular/7.png',
+					// '/images/enemy/regular/bug/2.png',
 				],
 			},
 			boss: {

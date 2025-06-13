@@ -14,7 +14,7 @@ export const EnemySprite = ({ enemy }: { enemy: EnemyType }) => {
 	const spriteRef = useRef<AnimatedSprite>(null);
 
 	useEffect(() => {
-		if (spriteRef.current && textures.player && textures.player.length > 0) {
+		if (spriteRef.current && textures.enemyBugRegular && textures.enemyBugRegular.length > 0) {
 			spriteRef.current.play();
 			spriteRef.current.animationSpeed = 0.2;
 			spriteRef.current.loop = true;
@@ -25,14 +25,14 @@ export const EnemySprite = ({ enemy }: { enemy: EnemyType }) => {
 				spriteRef.current.stop();
 			}
 		};
-	}, [textures.player]);
+	}, [textures.enemyBugRegular]);
 
-	if (!textures.player || textures.player.length === 0) return null;
+	if (!textures.enemyBugRegular || textures.enemyBugRegular.length === 0) return null;
 
 	return (
 		<pixiAnimatedSprite
 			ref={spriteRef}
-			textures={textures.player}
+			textures={textures.enemyBugRegular}
 			x={enemy.x + enemy.width / 2}
 			y={enemy.y + enemy.height / 2}
 			anchor={0.5}
